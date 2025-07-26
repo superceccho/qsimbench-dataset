@@ -1,0 +1,20 @@
+[project]
+name = "qbenchsim-dataset"
+version = "0.1.0"
+description = "QBenchSim Dataset"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ipykernel>=6.30.0",
+    "mqt-bench>=1.1.9",
+    "pymongo>=4.13.2",
+    "python-dotenv>=1.1.0",
+    "pyyaml>=6.0.2",
+    "quantum-executor>=0.1.0",
+    "sacred>=0.8.7",
+]
+
+[tool.uv.workspace]
+members = [
+    "packages/sacred-parallelism",
+]

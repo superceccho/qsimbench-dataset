@@ -1,0 +1,16 @@
+parallel:
+  jobs: 50
+  load: 100
+  memfree: 500G
+  memsuspend: 200G
+  joblog: parallel.log
+  results: results
+  flags: ["linebuffer", "progress"]
+  delay: 300
+
+params:
+  # circuit: ['dj', 'qft', 'qnn', 'qpeexact', 'random', 'realamprandom', 'su2random', 'twolocalrandom', 'vqe', 'wstate', 'grover-noancilla', 'ghz', 'qaoa', 'qwalk-noancilla']
+  circuit: ['qwalk-noancilla'] # grover-noancilla
+  size: [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4]
+  backend: ["aer_simulator", "fake_fez", "fake_marrakesh", "fake_sherbrooke", "fake_torino", "fake_kyiv"]
+  n_cores: [1]
