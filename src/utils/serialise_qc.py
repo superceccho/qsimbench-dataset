@@ -13,6 +13,7 @@ from pymongo import MongoClient
 from mqt.bench import get_benchmark
 from qiskit.qasm2 import dumps
 import datetime
+import mqt.bench as mb
 
 import os
 from pymongo import MongoClient
@@ -40,13 +41,14 @@ collection = db[COLLECTION_NAME]
 
 
 if __name__ == '__main__':
-    algs = ['dj', 'grover-noancilla', 'ghz', 'qaoa', 'qft', 'qnn', 'qpeexact', 'qwalk-noancilla', 'random', 'realamprandom', 'su2random', 'twolocalrandom', 'vqe', 'wstate']
+    algs = ['ae', 'bmw_quark_cardinality', 'bv', 'dj', 'ghz', 'graphstate', 'grover', 'hhl', 'qaoa', 'qft', 'qftentangled', 'qnn', 'qpeexact', 'qpeinexact', 'qwalk', 'randomcircuit', 'vqe_real_amp', 'vqe_su2', 'vqe_two_local', 'wstate']
     max_qubits = 15
+    #help(mb.BenchmarkLevel)
     for n in range(4, max_qubits + 1):
         for alg in algs:
             print(f"Serializing benchmark for {alg} with {n} qubits")
             # Get the benchmark for the algorithm and number of qubits
-            qc = get_benchmark(benchmark_name=alg, level="alg", circuit_size=n)
+            qc = get_benchmark(benchmark=alg, level=mb.BenchmarkLevel.ALG, circuit_size=n, random_parameters=True)
             #qc_decomposed = qc.decompose(reps=2)
             qc_decomposed = qc.copy()
             
