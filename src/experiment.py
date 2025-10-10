@@ -17,7 +17,6 @@ import psutil
 from typing import Any
 import logging
 
-
 # ── Load environment ──────────────────────────────────────────────────
 load_dotenv()
 
@@ -165,7 +164,6 @@ def main(circuit, size, backend, shots, batch_size, providers, n_cores, _run, _l
         "properties": _backend.properties().to_dict() if hasattr(_backend, 'properties') and _backend.properties() else {}
     }
 
-
     temp_dir = tempfile.mkdtemp()
     history_circuit = Path(temp_dir) / f"history_circuit.jsonl"
     history_mirror = Path(temp_dir) / f"history_mirror.jsonl"
@@ -179,7 +177,7 @@ def main(circuit, size, backend, shots, batch_size, providers, n_cores, _run, _l
     def stats_loop():
         while not stop_event.is_set():
             stats = monitor_stats()
-            stats_f.write(json.dumps(stats) + "\n")
+            stats_f.write(json.dumps(stats, indent=2) + "\n")
             stats_f.flush()
             _run.log_scalar("cpu_global_total", stats["cpu_global"]["percent_total"])
             _run.log_scalar("ram_virtual_percent", stats["ram_global"]["virtual"]["percent"])
@@ -216,9 +214,9 @@ def main(circuit, size, backend, shots, batch_size, providers, n_cores, _run, _l
     hm_f.close()
     stats_f.close()
 
-    _run.add_artifact(str(history_circuit))
-    _run.add_artifact(str(history_mirror))
-    _run.add_artifact(str(stats_path))
+    _run.add_artifact(str(history_circuit), content_type="application/json")
+    _run.add_artifact(str(history_mirror), content_type="application/json")
+    _run.add_artifact(str(stats_path), content_type="application/json")
     _log.info("Experiment completed successfully.")
 
     shutil.rmtree(temp_dir, ignore_errors=True)

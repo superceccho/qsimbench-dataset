@@ -4,6 +4,7 @@ import gridfs
 from pathlib import Path
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from datetime import date
 
 # ── Load environment variables ───────────────────────────────────────
 load_dotenv()
@@ -20,6 +21,8 @@ MONGO_URI = os.getenv("MONGO_URI") or \
 print(f"Connecting to MongoDB at {MONGO_URI}")
 
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "output/dataset")
+VERSION_NAME=os.getenv("VERSION_NAME", date.today().strftime("%Y-%m"))
+OUTPUT_DIR = f"{OUTPUT_DIR}/{VERSION_NAME}"
 print(f"Output directory set to: {OUTPUT_DIR}")
 
 # ── Connect to MongoDB and GridFS ───────────────────────────────────
@@ -27,6 +30,10 @@ client = MongoClient(MONGO_URI)
 db = client[MONGO_DB]
 runs = db.runs
 fs = gridfs.GridFS(db)
+
+metadata={}
+algorithms=[]
+backends=[]
 
 # ── Utility function to download artifact from GridFS ───────────────
 def _download_artifact(artifact, target_dir):
@@ -62,6 +69,20 @@ def create_summary_from_run(run_doc, output_dir):
         raise ValueError(f"Run {run_id} missing circuit metadata: {circuit_md}")
     if not backend:
         raise ValueError(f"Run {run_id} missing backend metadata: {backend_md}")
+    
+    new=True
+    for obj in algorithms:
+        if algorithm in obj:
+            if size not in obj[algorithm]:
+                obj[algorithm].append(size)
+                obj[algorithm].sort()
+            new=False
+
+    if new:
+        algorithms.append({algorithm:[size]})
+    
+    if backend not in backends:
+        backends.append(backend)
 
     summary = {
         "run_id": str(run_id),
@@ -162,7 +183,9 @@ def process_all_completed(output_dir=OUTPUT_DIR):
     # Build and write histories
     generate_histories(summary_paths, output_dir)
 
-    return summary_paths
+    metadata["algoritms"]=algorithms
+    metadata["backends"]=backends
 
-if __name__ == "__main__":
-    process_all_completed()
+    client.drop_database(MONGO_DB)
+
+    return metadata
