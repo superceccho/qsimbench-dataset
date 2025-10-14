@@ -12,7 +12,6 @@ load_dotenv()
 
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "output/dataset")
 VERSION_NAME=os.getenv("VERSION_NAME", datetime.today().strftime("%Y-%m"))
-OUTPUT_DIR = f"{OUTPUT_DIR}/{VERSION_NAME}"
 
 ALGORITHMS=json.loads(os.getenv("ALGORITHMS", "[]"))
 SIZES=json.loads(os.getenv("SIZES", "[]"))
@@ -39,12 +38,26 @@ from create_dataset import process_all_completed
 metadata=process_all_completed()
 end_time=datetime.now().time().strftime("%H:%M:%S")
 
-metadata["version"]=VERSION_NAME
+metadata["shots"]=SHOTS
 metadata["start_time"]=start_time
 metadata["end_time"]=end_time
 metadata["date"]=datetime.today().strftime("%Y-%m-%d")
-with open(f"{OUTPUT_DIR}/metadata.json", "w") as meta:
+with open(f"{OUTPUT_DIR}/{VERSION_NAME}/metadata.json", "w") as meta:
     json.dump(metadata, meta, indent=2)
+
+try:
+    meta=open(f"{OUTPUT_DIR}/metadata.json", "r+")
+    versions=json.load(meta)
+    if VERSION_NAME not in versions:
+        versions.append(VERSION_NAME)
+    meta.seek(0)
+    json.dump(versions, meta)
+    meta.close()
+except FileNotFoundError:
+    versions=[VERSION_NAME]
+    meta=open(f"{OUTPUT_DIR}/metadata.json", "w")
+    json.dump(versions, meta)
+    meta.close()
 
 os.system("docker compose down")
 sleep(5)

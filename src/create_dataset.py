@@ -183,6 +183,7 @@ def process_all_completed(output_dir=OUTPUT_DIR):
     # Build and write histories
     generate_histories(summary_paths, output_dir)
 
+    metadata["version"]=VERSION_NAME
     metadata["algoritms"]=algorithms
     metadata["backends"]=backends
 
