@@ -33,6 +33,7 @@ fs = gridfs.GridFS(db)
 
 metadata={}
 algorithms=[]
+sizes=[]
 backends=[]
 
 # ── Utility function to download artifact from GridFS ───────────────
@@ -70,16 +71,11 @@ def create_summary_from_run(run_doc, output_dir):
     if not backend:
         raise ValueError(f"Run {run_id} missing backend metadata: {backend_md}")
     
-    new=True
-    for obj in algorithms:
-        if algorithm in obj:
-            if size not in obj[algorithm]:
-                obj[algorithm].append(size)
-                obj[algorithm].sort()
-            new=False
+    if algorithm not in algorithms:
+        algorithms.append(algorithm)
 
-    if new:
-        algorithms.append({algorithm:[size]})
+    if size not in sizes:
+        sizes.append(size)
     
     if backend not in backends:
         backends.append(backend)
@@ -183,9 +179,12 @@ def process_all_completed(output_dir=OUTPUT_DIR):
     # Build and write histories
     generate_histories(summary_paths, output_dir)
 
-    backends.sort()
     metadata["version"]=VERSION_NAME
+    algorithms.sort()
     metadata["algoritms"]=algorithms
+    sizes.sort()
+    metadata["sizes"]=sizes
+    backends.sort()
     metadata["backends"]=backends
 
     client.drop_database(MONGO_DB)

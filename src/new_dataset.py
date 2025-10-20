@@ -1,29 +1,37 @@
 import json
-from multiprocessing import Pool
 from datetime import datetime
 from dotenv import load_dotenv
 import os
 import subprocess
+import platform
+import psutil
+import atexit
 
-def run_command(command: str, message: str):
-    result=subprocess.run(command.split(" "), capture_output=True)
-    if result.returncode != 0:
-        subprocess.run(["docker", "compose", "down"])
-        raise RuntimeError(message)
+def close_compose():
+    subprocess.run("docker compose down", shell=True)
     
 load_dotenv()
 
-OUTPUT_DIR = os.getenv("OUTPUT_DIR", "output/dataset")
+OUTPUT_DIR=os.getenv("OUTPUT_DIR", "../dataset")
 VERSION_NAME=os.getenv("VERSION_NAME", datetime.today().strftime("%Y-%m"))
 
-ALGORITHMS=json.loads(os.getenv("ALGORITHMS", "[]"))
-SIZES=json.loads(os.getenv("SIZES", "[]"))
-BACKENDS=json.loads(os.getenv("BACKENDS", "[]"))
-SHOTS=int(os.getenv("SHOTS", 20000))
-N_CORES=int(os.getenv("N_CORES"))
-JOBS=int(os.getenv("JOBS", os.cpu_count()))
+ALGORITHMS=json.loads(os.getenv("ALGORITHMS"))
+SIZES=json.loads(os.getenv("SIZES"))
+BACKENDS=json.loads(os.getenv("BACKENDS"))
+SHOTS=os.getenv("SHOTS", 20000)
+N_CORES=os.getenv("N_CORES")
+if not ALGORITHMS or not SIZES or not BACKENDS:
+    raise RuntimeError("Empty run parameter(s)")
 
-versions=[]
+JOBS=os.getenv("JOBS", os.cpu_count())
+LOAD=os.getenv("LOAD", os.cpu_count())
+MEMFREE=os.getenv("MEMFREE")
+MEMSUSPEND=os.getenv("MEMSUSPEND")
+DELAY=os.getenv("DELAY", "0")
+
+if not MEMFREE or not MEMSUSPEND:
+    raise RuntimeError("Missing parallel parameter(s)")
+
 try:
     meta=open(f"{OUTPUT_DIR}/versions.json", "r")
     versions=json.load(meta)
@@ -31,41 +39,59 @@ try:
     if VERSION_NAME in versions:
         raise RuntimeError("Version name already used")
 except FileNotFoundError:
-    print("No older versions")
+    versions=[]
 
-run_command("docker compose up -d", "Docker isn't running")
+subprocess.run(["docker", "compose", "up", "-d"], check=True)
+print("Docker containers running")
 
-def run_task(algorithm, size, backend):
-    from experiment import ex
-    ex.run(config_updates={"circuit": algorithm, "size":size, "backend":backend, "shots":SHOTS, "n_cores":N_CORES})
-    
-inputs=[]
-for algorithm in ALGORITHMS:
-    for size in SIZES:
-        for backend in BACKENDS:
-            inputs.append((algorithm, size, backend))
-            
+atexit.register(close_compose)
+
+command=["parallel", "--jobs", JOBS, "--load", LOAD, "--memfree", MEMFREE, "--memsuspend", MEMSUSPEND, "--delay", DELAY, "--progress", f"python experiment.py with circuit={{1}} size={{2}} backend={{3}} shots={SHOTS} n_cores={N_CORES}", ":::", *ALGORITHMS, ":::", *map(str, SIZES), ":::", *BACKENDS]
 start_time=datetime.now().time().strftime("%H:%M:%S")
-with Pool(processes=JOBS) as pool:
-    pool.starmap(run_task, inputs)
+subprocess.run(command, check=True)
 end_time=datetime.now().time().strftime("%H:%M:%S")
 
 from create_dataset import process_all_completed
-metadata=process_all_completed()
+process_all_completed()
+
+metadata={"version": VERSION_NAME}
+ALGORITHMS.sort()
+metadata["algorithms"]=ALGORITHMS
+SIZES.sort()
+metadata["sizes"]=SIZES
+BACKENDS.sort()
+metadata["backends"]=BACKENDS
 
 metadata["shots"]=SHOTS
 metadata["start_time"]=start_time
 metadata["end_time"]=end_time
 metadata["date"]=datetime.today().strftime("%Y-%m-%d")
+
+metadata["os"]=platform.system()
+metadata["os_version"]=platform.version()
+metadata["os_release"]=platform.release()
+metadata["architecture"]=platform.machine()
+metadata["python_version"]=platform.python_version()
+
+metadata["cpu_name"] = platform.processor() or "Unknown"
+metadata["cpu_cores_physical"] = psutil.cpu_count(logical=False)
+metadata["cpu_cores_logical"] = psutil.cpu_count(logical=True)
+metadata["cpu_freq_mhz"] = psutil.cpu_freq()._asdict() if psutil.cpu_freq() else {}
+
+vm = psutil.virtual_memory()
+metadata["memory_total_GB"] = round(vm.total / (1024**3), 2)
+metadata["memory_available_GB"] = round(vm.available / (1024**3), 2)
+
+libraries=subprocess.getoutput("pip freeze").splitlines()
+metadata["libraries"]=libraries
+
 with open(f"{OUTPUT_DIR}/{VERSION_NAME}/metadata.json", "w") as meta:
     json.dump(metadata, meta, indent=2)
 
-with open(f"{OUTPUT_DIR}/versions.json", "w") as meta:
+with open(f"{OUTPUT_DIR}/versions.json", "w") as vers:
     versions.append(VERSION_NAME)
-    json.dump(versions, meta)
+    json.dump(versions, vers)
 
-run_command(f"git add {OUTPUT_DIR}", "Error in git add")
-run_command(f"git commit -m {VERSION_NAME}", "Error during git commit")
-run_command("git push --force", "Error in git push")
-
-subprocess.run(["docker", "compose", "down"], check=True)
+subprocess.run(["git", "add", OUTPUT_DIR], check=True)
+subprocess.run(["git", "commit", "-m", f"Added version {VERSION_NAME}"], check=True)
+subprocess.run(["git", "push", "--force"], check=True)
