@@ -1,0 +1,4531 @@
+{
+  "run_id": "8",
+  "algorithm": "dj",
+  "size": 6,
+  "backend": "fake_oslo",
+  "metadata": {
+    "backend": {
+      "name": "fake_oslo",
+      "configuration": {
+        "backend_name": "fake_oslo",
+        "backend_version": "1.0.5",
+        "n_qubits": 7,
+        "basis_gates": [
+          "id",
+          "rz",
+          "sx",
+          "x",
+          "cx",
+          "reset"
+        ],
+        "gates": [
+          {
+            "name": "id",
+            "parameters": [],
+            "qasm_def": "gate id q { U(0, 0, 0) q; }",
+            "coupling_map": [
+              [
+                0
+              ],
+              [
+                1
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ],
+              [
+                4
+              ],
+              [
+                5
+              ],
+              [
+                6
+              ]
+            ]
+          },
+          {
+            "name": "rz",
+            "parameters": [
+              "theta"
+            ],
+            "qasm_def": "gate rz(theta) q { U(0, 0, theta) q; }",
+            "coupling_map": [
+              [
+                0
+              ],
+              [
+                1
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ],
+              [
+                4
+              ],
+              [
+                5
+              ],
+              [
+                6
+              ]
+            ]
+          },
+          {
+            "name": "sx",
+            "parameters": [],
+            "qasm_def": "gate sx q { U(pi/2, 3*pi/2, pi/2) q; }",
+            "coupling_map": [
+              [
+                0
+              ],
+              [
+                1
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ],
+              [
+                4
+              ],
+              [
+                5
+              ],
+              [
+                6
+              ]
+            ]
+          },
+          {
+            "name": "x",
+            "parameters": [],
+            "qasm_def": "gate x q { U(pi, 0, pi) q; }",
+            "coupling_map": [
+              [
+                0
+              ],
+              [
+                1
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ],
+              [
+                4
+              ],
+              [
+                5
+              ],
+              [
+                6
+              ]
+            ]
+          },
+          {
+            "name": "cx",
+            "parameters": [],
+            "qasm_def": "gate cx q0, q1 { CX q0, q1; }",
+            "coupling_map": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                1
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                3
+              ],
+              [
+                5,
+                4
+              ],
+              [
+                5,
+                6
+              ],
+              [
+                6,
+                5
+              ]
+            ]
+          },
+          {
+            "name": "reset",
+            "parameters": null,
+            "qasm_def": null
+          }
+        ],
+        "local": false,
+        "simulator": false,
+        "conditional": false,
+        "open_pulse": false,
+        "memory": true,
+        "max_shots": 100000,
+        "coupling_map": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            5
+          ]
+        ],
+        "dynamic_reprate_enabled": true,
+        "meas_levels": [
+          1,
+          2
+        ],
+        "meas_kernels": [
+          "hw_qmfk"
+        ],
+        "discriminators": [
+          "linear_discriminator",
+          "hw_qmfk",
+          "quadratic_discriminator"
+        ],
+        "meas_map": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        ],
+        "supported_instructions": [
+          "cx",
+          "u1",
+          "measure",
+          "reset",
+          "u2",
+          "shiftf",
+          "delay",
+          "rz",
+          "play",
+          "id",
+          "u3",
+          "acquire",
+          "x",
+          "setf",
+          "sx"
+        ],
+        "rep_delay_range": [
+          0.0,
+          500.0
+        ],
+        "default_rep_delay": 250.0,
+        "max_experiments": 300,
+        "sample_name": "family: Falcon, revision: 5.11, segment: H",
+        "n_registers": 1,
+        "credits_required": true,
+        "online_date": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+YDGQQAAAAAAA==",
+              {
+                "py/reduce": [
+                  {
+                    "py/function": "copyreg._reconstructor"
+                  },
+                  {
+                    "py/tuple": [
+                      {
+                        "py/type": "dateutil.tz.tz.tzutc"
+                      },
+                      {
+                        "py/type": "datetime.tzinfo"
+                      },
+                      {
+                        "py/reduce": [
+                          {
+                            "py/type": "datetime.tzinfo"
+                          },
+                          {
+                            "py/tuple": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          ]
+        },
+        "description": "7 qubit device",
+        "dt": 0.2222222222222222,
+        "dtm": 0.2222222222222222,
+        "processor_type": {
+          "family": "Falcon",
+          "revision": "5.11",
+          "segment": "H"
+        },
+        "parametric_pulses": [
+          "gaussian",
+          "gaussian_square",
+          "drag",
+          "constant"
+        ],
+        "allow_q_object": true,
+        "clops": 2645,
+        "measure_esp_enabled": false,
+        "multi_meas_enabled": true,
+        "parallel_compilation": false,
+        "quantum_volume": 32,
+        "qubit_channel_mapping": [
+          [
+            "u0",
+            "d0",
+            "u1",
+            "m0"
+          ],
+          [
+            "u1",
+            "u2",
+            "d1",
+            "u5",
+            "u0",
+            "u4",
+            "m1",
+            "u3"
+          ],
+          [
+            "d2",
+            "u2",
+            "u4",
+            "m2"
+          ],
+          [
+            "d3",
+            "m3",
+            "u5",
+            "u3",
+            "u6",
+            "u8"
+          ],
+          [
+            "u9",
+            "d4",
+            "u7",
+            "m4"
+          ],
+          [
+            "u10",
+            "u11",
+            "u9",
+            "d5",
+            "u7",
+            "u6",
+            "u8",
+            "m5"
+          ],
+          [
+            "m6",
+            "d6",
+            "u11",
+            "u10"
+          ]
+        ],
+        "supported_features": [
+          "qobj"
+        ],
+        "timing_constraints": {
+          "acquire_alignment": 16,
+          "granularity": 16,
+          "min_length": 64,
+          "pulse_alignment": 16
+        },
+        "uchannels_enabled": true,
+        "url": "None",
+        "input_allowed": [
+          "job",
+          "runtime"
+        ],
+        "allow_object_storage": true,
+        "pulse_num_channels": 9,
+        "pulse_num_qubits": 3,
+        "live_data": false,
+        "n_uchannels": 12,
+        "u_channel_lo": [
+          [
+            {
+              "q": 1,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 0,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 2,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 3,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 1,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 1,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 5,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 5,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 3,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 4,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 6,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            {
+              "q": 5,
+              "scale": {
+                "py/object": "builtins.complex",
+                "py/newargs": {
+                  "py/tuple": [
+                    1.0,
+                    0.0
+                  ]
+                }
+              }
+            }
+          ]
+        ],
+        "qubit_lo_range": [
+          [
+            4.4250431616195,
+            5.4250431616195
+          ],
+          [
+            4.54627284903205,
+            5.54627284903205
+          ],
+          [
+            4.4619984906787,
+            5.4619984906787
+          ],
+          [
+            4.608098767473062,
+            5.608098767473062
+          ],
+          [
+            4.511074105950458,
+            5.511074105950458
+          ],
+          [
+            4.673290077743308,
+            5.673290077743308
+          ],
+          [
+            4.819311606468152,
+            5.819311606468152
+          ]
+        ],
+        "meas_lo_range": [
+          [
+            6.729836446,
+            7.729836446
+          ],
+          [
+            6.604835349,
+            7.604835349000002
+          ],
+          [
+            6.830658976000001,
+            7.830658976000001
+          ],
+          [
+            6.632327716000002,
+            7.632327716000002
+          ],
+          [
+            6.713651857,
+            7.713651857
+          ],
+          [
+            6.8123906220000014,
+            7.8123906220000014
+          ],
+          [
+            6.787838814000001,
+            7.787838814000001
+          ]
+        ],
+        "rep_times": [
+          0.001
+        ],
+        "acquisition_latency": [],
+        "conditional_latency": [],
+        "hamiltonian": {
+          "description": "Qubits are modeled as Duffing oscillators. In this case, the system includes higher energy states, i.e. not just |0> and |1>. The Pauli operators are generalized via the following set of transformations:\n\n$(\\mathbb{I}-\\sigma_{i}^z)/2 \\rightarrow O_i \\equiv b^\\dagger_{i} b_{i}$,\n\n$\\sigma_{+} \\rightarrow b^\\dagger$,\n\n$\\sigma_{-} \\rightarrow b$,\n\n$\\sigma_{i}^X \\rightarrow b^\\dagger_{i} + b_{i}$.\n\nQubits are coupled through resonator buses. The provided Hamiltonian has been projected into the zero excitation subspace of the resonator buses leading to an effective qubit-qubit flip-flop interaction. The qubit resonance frequencies in the Hamiltonian are the cavity dressed frequencies and not exactly what is returned by the backend defaults, which also includes the dressing due to the qubit-qubit interactions.\n\nQuantities are returned in angular frequencies, with units 2*pi*GHz.\n\nWARNING: Currently not all system Hamiltonian information is available to the public, missing values have been replaced with 0.\n",
+          "h_latex": "\\begin{align} \\mathcal{H}/\\hbar = & \\sum_{i=0}^{6}\\left(\\frac{\\omega_{q,i}}{2}(\\mathbb{I}-\\sigma_i^{z})+\\frac{\\Delta_{i}}{2}(O_i^2-O_i)+\\Omega_{d,i}D_i(t)\\sigma_i^{X}\\right) \\\\ & + J_{0,1}(\\sigma_{0}^{+}\\sigma_{1}^{-}+\\sigma_{0}^{-}\\sigma_{1}^{+}) + J_{1,2}(\\sigma_{1}^{+}\\sigma_{2}^{-}+\\sigma_{1}^{-}\\sigma_{2}^{+}) + J_{4,5}(\\sigma_{4}^{+}\\sigma_{5}^{-}+\\sigma_{4}^{-}\\sigma_{5}^{+}) + J_{5,6}(\\sigma_{5}^{+}\\sigma_{6}^{-}+\\sigma_{5}^{-}\\sigma_{6}^{+}) \\\\ & + J_{1,3}(\\sigma_{1}^{+}\\sigma_{3}^{-}+\\sigma_{1}^{-}\\sigma_{3}^{+}) + J_{3,5}(\\sigma_{3}^{+}\\sigma_{5}^{-}+\\sigma_{3}^{-}\\sigma_{5}^{+}) \\\\ & + \\Omega_{d,0}(U_{0}^{(0,1)}(t))\\sigma_{0}^{X} + \\Omega_{d,1}(U_{1}^{(1,0)}(t)+U_{3}^{(1,3)}(t)+U_{2}^{(1,2)}(t))\\sigma_{1}^{X} \\\\ & + \\Omega_{d,2}(U_{4}^{(2,1)}(t))\\sigma_{2}^{X} + \\Omega_{d,3}(U_{5}^{(3,1)}(t)+U_{6}^{(3,5)}(t))\\sigma_{3}^{X} \\\\ & + \\Omega_{d,4}(U_{7}^{(4,5)}(t))\\sigma_{4}^{X} + \\Omega_{d,5}(U_{8}^{(5,3)}(t)+U_{10}^{(5,6)}(t)+U_{9}^{(5,4)}(t))\\sigma_{5}^{X} \\\\ & + \\Omega_{d,6}(U_{11}^{(6,5)}(t))\\sigma_{6}^{X} \\\\ \\end{align}",
+          "h_str": [
+            "_SUM[i,0,6,wq{i}/2*(I{i}-Z{i})]",
+            "_SUM[i,0,6,delta{i}/2*O{i}*O{i}]",
+            "_SUM[i,0,6,-delta{i}/2*O{i}]",
+            "_SUM[i,0,6,omegad{i}*X{i}||D{i}]",
+            "jq0q1*Sp0*Sm1",
+            "jq0q1*Sm0*Sp1",
+            "jq1q2*Sp1*Sm2",
+            "jq1q2*Sm1*Sp2",
+            "jq4q5*Sp4*Sm5",
+            "jq4q5*Sm4*Sp5",
+            "jq5q6*Sp5*Sm6",
+            "jq5q6*Sm5*Sp6",
+            "jq1q3*Sp1*Sm3",
+            "jq1q3*Sm1*Sp3",
+            "jq3q5*Sp3*Sm5",
+            "jq3q5*Sm3*Sp5",
+            "omegad1*X0||U0",
+            "omegad0*X1||U1",
+            "omegad3*X1||U3",
+            "omegad2*X1||U2",
+            "omegad1*X2||U4",
+            "omegad1*X3||U5",
+            "omegad5*X3||U6",
+            "omegad5*X4||U7",
+            "omegad3*X5||U8",
+            "omegad6*X5||U10",
+            "omegad4*X5||U9",
+            "omegad5*X6||U11"
+          ],
+          "osc": {},
+          "qub": {
+            "0": 3,
+            "1": 3,
+            "2": 3,
+            "3": 3,
+            "4": 3,
+            "5": 3,
+            "6": 3
+          },
+          "vars": {
+            "delta0": -2.1710731135187147,
+            "delta1": -2.1542170061400743,
+            "delta2": -2.163170672110012,
+            "delta3": -2.1485510754736845,
+            "delta4": -2.1651009023029526,
+            "delta5": -2.154771444964597,
+            "delta6": -2.128894839231473,
+            "jq0q1": 0.01984891041244237,
+            "jq1q2": 0.019839140193104857,
+            "jq1q3": 0.014778217170848052,
+            "jq3q5": 0.020747024193950764,
+            "jq4q5": 0.020361306329770044,
+            "jq5q6": 0.010931407400838719,
+            "omegad0": 1.0653674870347911,
+            "omegad1": 1.103779874643512,
+            "omegad2": 0.9848018924014904,
+            "omegad3": 0.9820860734963635,
+            "omegad4": 0.9675082231273433,
+            "omegad5": 1.0188554881910525,
+            "omegad6": 1.1944151797596076,
+            "wq0": 30.944958830312927,
+            "wq1": 31.70666742105745,
+            "wq2": 31.177156010879695,
+            "wq3": 32.0951311234089,
+            "wq4": 31.485507195696,
+            "wq5": 32.504740206254695,
+            "wq6": 33.42222053007053
+          }
+        },
+        "channels": {
+          "acquire0": {
+            "operates": {
+              "qubits": [
+                0
+              ]
+            },
+            "purpose": "acquire",
+            "type": "acquire"
+          },
+          "acquire1": {
+            "operates": {
+              "qubits": [
+                1
+              ]
+            },
+            "purpose": "acquire",
+            "type": "acquire"
+          },
+          "acquire2": {
+            "operates": {
+              "qubits": [
+                2
+              ]
+            },
+            "purpose": "acquire",
+            "type": "acquire"
+          },
+          "acquire3": {
+            "operates": {
+              "qubits": [
+                3
+              ]
+            },
+            "purpose": "acquire",
+            "type": "acquire"
+          },
+          "acquire4": {
+            "operates": {
+              "qubits": [
+                4
+              ]
+            },
+            "purpose": "acquire",
+            "type": "acquire"
+          },
+          "acquire5": {
+            "operates": {
+              "qubits": [
+                5
+              ]
+            },
+            "purpose": "acquire",
+            "type": "acquire"
+          },
+          "acquire6": {
+            "operates": {
+              "qubits": [
+                6
+              ]
+            },
+            "purpose": "acquire",
+            "type": "acquire"
+          },
+          "d0": {
+            "operates": {
+              "qubits": [
+                0
+              ]
+            },
+            "purpose": "drive",
+            "type": "drive"
+          },
+          "d1": {
+            "operates": {
+              "qubits": [
+                1
+              ]
+            },
+            "purpose": "drive",
+            "type": "drive"
+          },
+          "d2": {
+            "operates": {
+              "qubits": [
+                2
+              ]
+            },
+            "purpose": "drive",
+            "type": "drive"
+          },
+          "d3": {
+            "operates": {
+              "qubits": [
+                3
+              ]
+            },
+            "purpose": "drive",
+            "type": "drive"
+          },
+          "d4": {
+            "operates": {
+              "qubits": [
+                4
+              ]
+            },
+            "purpose": "drive",
+            "type": "drive"
+          },
+          "d5": {
+            "operates": {
+              "qubits": [
+                5
+              ]
+            },
+            "purpose": "drive",
+            "type": "drive"
+          },
+          "d6": {
+            "operates": {
+              "qubits": [
+                6
+              ]
+            },
+            "purpose": "drive",
+            "type": "drive"
+          },
+          "m0": {
+            "operates": {
+              "qubits": [
+                0
+              ]
+            },
+            "purpose": "measure",
+            "type": "measure"
+          },
+          "m1": {
+            "operates": {
+              "qubits": [
+                1
+              ]
+            },
+            "purpose": "measure",
+            "type": "measure"
+          },
+          "m2": {
+            "operates": {
+              "qubits": [
+                2
+              ]
+            },
+            "purpose": "measure",
+            "type": "measure"
+          },
+          "m3": {
+            "operates": {
+              "qubits": [
+                3
+              ]
+            },
+            "purpose": "measure",
+            "type": "measure"
+          },
+          "m4": {
+            "operates": {
+              "qubits": [
+                4
+              ]
+            },
+            "purpose": "measure",
+            "type": "measure"
+          },
+          "m5": {
+            "operates": {
+              "qubits": [
+                5
+              ]
+            },
+            "purpose": "measure",
+            "type": "measure"
+          },
+          "m6": {
+            "operates": {
+              "qubits": [
+                6
+              ]
+            },
+            "purpose": "measure",
+            "type": "measure"
+          },
+          "u0": {
+            "operates": {
+              "qubits": [
+                0,
+                1
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u1": {
+            "operates": {
+              "qubits": [
+                1,
+                0
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u10": {
+            "operates": {
+              "qubits": [
+                5,
+                6
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u11": {
+            "operates": {
+              "qubits": [
+                6,
+                5
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u2": {
+            "operates": {
+              "qubits": [
+                1,
+                2
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u3": {
+            "operates": {
+              "qubits": [
+                1,
+                3
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u4": {
+            "operates": {
+              "qubits": [
+                2,
+                1
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u5": {
+            "operates": {
+              "qubits": [
+                3,
+                1
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u6": {
+            "operates": {
+              "qubits": [
+                3,
+                5
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u7": {
+            "operates": {
+              "qubits": [
+                4,
+                5
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u8": {
+            "operates": {
+              "qubits": [
+                5,
+                3
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          },
+          "u9": {
+            "operates": {
+              "qubits": [
+                5,
+                4
+              ]
+            },
+            "purpose": "cross-resonance",
+            "type": "control"
+          }
+        }
+      },
+      "properties": {
+        "backend_name": "ibm_oslo",
+        "backend_version": "1.0.5",
+        "last_update_date": {
+          "py/object": "datetime.datetime",
+          "__reduce__": [
+            {
+              "py/type": "datetime.datetime"
+            },
+            [
+              "B+YHERYBNwAAAA==",
+              {
+                "py/reduce": [
+                  {
+                    "py/function": "copyreg._reconstructor"
+                  },
+                  {
+                    "py/tuple": [
+                      {
+                        "py/type": "dateutil.tz.tz.tzoffset"
+                      },
+                      {
+                        "py/type": "datetime.tzinfo"
+                      },
+                      {
+                        "py/reduce": [
+                          {
+                            "py/type": "datetime.tzinfo"
+                          },
+                          {
+                            "py/tuple": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "_name": null,
+                    "_offset": {
+                      "py/reduce": [
+                        {
+                          "py/type": "datetime.timedelta"
+                        },
+                        {
+                          "py/tuple": [
+                            0,
+                            7200,
+                            0
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          ]
+        },
+        "qubits": [
+          [
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERUyNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T1",
+              "unit": "us",
+              "value": 148.84747328441438
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQY1CQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T2",
+              "unit": "us",
+              "value": 73.69298024352507
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "frequency",
+              "unit": "GHz",
+              "value": 4.925043161619499
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "anharmonicity",
+              "unit": "GHz",
+              "value": -0.34553701783041496
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_error",
+              "unit": "",
+              "value": 0.009800000000000031
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas0_prep1",
+              "unit": "",
+              "value": 0.0102
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas1_prep0",
+              "unit": "",
+              "value": 0.009399999999999964
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_length",
+              "unit": "ns",
+              "value": 910.2222222222222
+            }
+          ],
+          [
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERU0KQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T1",
+              "unit": "us",
+              "value": 137.06651413337354
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQY3DQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T2",
+              "unit": "us",
+              "value": 37.0201555236948
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "frequency",
+              "unit": "GHz",
+              "value": 5.04627284903205
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "anharmonicity",
+              "unit": "GHz",
+              "value": -0.34285428501981674
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_error",
+              "unit": "",
+              "value": 0.01429999999999998
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas0_prep1",
+              "unit": "",
+              "value": 0.012
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas1_prep0",
+              "unit": "",
+              "value": 0.016599999999999948
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_length",
+              "unit": "ns",
+              "value": 910.2222222222222
+            }
+          ],
+          [
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERUyNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T1",
+              "unit": "us",
+              "value": 219.21703514896734
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQY1CQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T2",
+              "unit": "us",
+              "value": 46.69878652698784
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "frequency",
+              "unit": "GHz",
+              "value": 4.9619984906787
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "anharmonicity",
+              "unit": "GHz",
+              "value": -0.34427930521772604
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_error",
+              "unit": "",
+              "value": 0.00770000000000004
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas0_prep1",
+              "unit": "",
+              "value": 0.009199999999999986
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas1_prep0",
+              "unit": "",
+              "value": 0.0062
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_length",
+              "unit": "ns",
+              "value": 910.2222222222222
+            }
+          ],
+          [
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERUyNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T1",
+              "unit": "us",
+              "value": 121.28335234199257
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQY1CQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T2",
+              "unit": "us",
+              "value": 46.487660104851436
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "frequency",
+              "unit": "GHz",
+              "value": 5.108098767473062
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "anharmonicity",
+              "unit": "GHz",
+              "value": -0.3419525241470448
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_error",
+              "unit": "",
+              "value": 0.01539999999999997
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas0_prep1",
+              "unit": "",
+              "value": 0.0124
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas1_prep0",
+              "unit": "",
+              "value": 0.018399999999999972
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_length",
+              "unit": "ns",
+              "value": 910.2222222222222
+            }
+          ],
+          [
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERUyNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T1",
+              "unit": "us",
+              "value": 188.1384270262949
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQY1CQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T2",
+              "unit": "us",
+              "value": 184.3690321834765
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "frequency",
+              "unit": "GHz",
+              "value": 5.011074105950458
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "anharmonicity",
+              "unit": "GHz",
+              "value": -0.34458651089423753
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_error",
+              "unit": "",
+              "value": 0.023700000000000054
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas0_prep1",
+              "unit": "",
+              "value": 0.021
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas1_prep0",
+              "unit": "",
+              "value": 0.02639999999999998
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_length",
+              "unit": "ns",
+              "value": 910.2222222222222
+            }
+          ],
+          [
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERU0KQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T1",
+              "unit": "us",
+              "value": 142.17817897014814
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQY3DQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T2",
+              "unit": "us",
+              "value": 41.13094933306526
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "frequency",
+              "unit": "GHz",
+              "value": 5.173290077743308
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "anharmonicity",
+              "unit": "GHz",
+              "value": -0.34294252669938147
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_error",
+              "unit": "",
+              "value": 0.00990000000000002
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas0_prep1",
+              "unit": "",
+              "value": 0.012599999999999945
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas1_prep0",
+              "unit": "",
+              "value": 0.0072
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_length",
+              "unit": "ns",
+              "value": 910.2222222222222
+            }
+          ],
+          [
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERUyNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T1",
+              "unit": "us",
+              "value": 103.0457879895173
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQY1CQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "T2",
+              "unit": "us",
+              "value": 208.46324125703032
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "frequency",
+              "unit": "GHz",
+              "value": 5.319311606468152
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHERYBNwAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "anharmonicity",
+              "unit": "GHz",
+              "value": -0.33882413698651476
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_error",
+              "unit": "",
+              "value": 0.02939999999999998
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas0_prep1",
+              "unit": "",
+              "value": 0.024599999999999955
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "prob_meas1_prep0",
+              "unit": "",
+              "value": 0.0342
+            },
+            {
+              "date": {
+                "py/object": "datetime.datetime",
+                "__reduce__": [
+                  {
+                    "py/type": "datetime.datetime"
+                  },
+                  [
+                    "B+YHEQYrAQAAAA==",
+                    {
+                      "py/id": 263
+                    }
+                  ]
+                ]
+              },
+              "name": "readout_length",
+              "unit": "ns",
+              "value": 910.2222222222222
+            }
+          ]
+        ],
+        "gates": [
+          {
+            "qubits": [
+              0
+            ],
+            "gate": "id",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0002155730497444277
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "id0"
+          },
+          {
+            "qubits": [
+              1
+            ],
+            "gate": "id",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcABAAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0002993132781582579
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "id1"
+          },
+          {
+            "qubits": [
+              2
+            ],
+            "gate": "id",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.00026007592653822426
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "id2"
+          },
+          {
+            "qubits": [
+              3
+            ],
+            "gate": "id",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0005817781152172266
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "id3"
+          },
+          {
+            "qubits": [
+              4
+            ],
+            "gate": "id",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.00016640155546641838
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "id4"
+          },
+          {
+            "qubits": [
+              5
+            ],
+            "gate": "id",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcABAAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.00035485711216763524
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "id5"
+          },
+          {
+            "qubits": [
+              6
+            ],
+            "gate": "id",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.000251929116208104
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "id6"
+          },
+          {
+            "qubits": [
+              0
+            ],
+            "gate": "rz",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 0
+              }
+            ],
+            "name": "rz0"
+          },
+          {
+            "qubits": [
+              1
+            ],
+            "gate": "rz",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 0
+              }
+            ],
+            "name": "rz1"
+          },
+          {
+            "qubits": [
+              2
+            ],
+            "gate": "rz",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 0
+              }
+            ],
+            "name": "rz2"
+          },
+          {
+            "qubits": [
+              3
+            ],
+            "gate": "rz",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 0
+              }
+            ],
+            "name": "rz3"
+          },
+          {
+            "qubits": [
+              4
+            ],
+            "gate": "rz",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 0
+              }
+            ],
+            "name": "rz4"
+          },
+          {
+            "qubits": [
+              5
+            ],
+            "gate": "rz",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 0
+              }
+            ],
+            "name": "rz5"
+          },
+          {
+            "qubits": [
+              6
+            ],
+            "gate": "rz",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 0
+              }
+            ],
+            "name": "rz6"
+          },
+          {
+            "qubits": [
+              0
+            ],
+            "gate": "sx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0002155730497444277
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "sx0"
+          },
+          {
+            "qubits": [
+              1
+            ],
+            "gate": "sx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcABAAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0002993132781582579
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "sx1"
+          },
+          {
+            "qubits": [
+              2
+            ],
+            "gate": "sx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.00026007592653822426
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "sx2"
+          },
+          {
+            "qubits": [
+              3
+            ],
+            "gate": "sx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0005817781152172266
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "sx3"
+          },
+          {
+            "qubits": [
+              4
+            ],
+            "gate": "sx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.00016640155546641838
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "sx4"
+          },
+          {
+            "qubits": [
+              5
+            ],
+            "gate": "sx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcABAAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.00035485711216763524
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "sx5"
+          },
+          {
+            "qubits": [
+              6
+            ],
+            "gate": "sx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.000251929116208104
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "sx6"
+          },
+          {
+            "qubits": [
+              0
+            ],
+            "gate": "x",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0002155730497444277
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "x0"
+          },
+          {
+            "qubits": [
+              1
+            ],
+            "gate": "x",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcABAAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0002993132781582579
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "x1"
+          },
+          {
+            "qubits": [
+              2
+            ],
+            "gate": "x",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.00026007592653822426
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "x2"
+          },
+          {
+            "qubits": [
+              3
+            ],
+            "gate": "x",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0005817781152172266
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "x3"
+          },
+          {
+            "qubits": [
+              4
+            ],
+            "gate": "x",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.00016640155546641838
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "x4"
+          },
+          {
+            "qubits": [
+              5
+            ],
+            "gate": "x",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcABAAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.00035485711216763524
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "x5"
+          },
+          {
+            "qubits": [
+              6
+            ],
+            "gate": "x",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQY5HQAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.000251929116208104
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 35.55555555555556
+              }
+            ],
+            "name": "x6"
+          },
+          {
+            "qubits": [
+              4,
+              5
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQgGJwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.008562604964982262
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 305.77777777777777
+              }
+            ],
+            "name": "cx4_5"
+          },
+          {
+            "qubits": [
+              5,
+              4
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQgGJwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.008562604964982262
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 341.3333333333333
+              }
+            ],
+            "name": "cx5_4"
+          },
+          {
+            "qubits": [
+              2,
+              1
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQc6MAAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.006700619069209907
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 213.33333333333331
+              }
+            ],
+            "name": "cx2_1"
+          },
+          {
+            "qubits": [
+              1,
+              2
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQc6MAAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.006700619069209907
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 248.88888888888889
+              }
+            ],
+            "name": "cx1_2"
+          },
+          {
+            "qubits": [
+              1,
+              3
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcyHgAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0090091804177925
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 263.1111111111111
+              }
+            ],
+            "name": "cx1_3"
+          },
+          {
+            "qubits": [
+              3,
+              1
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcyHgAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.0090091804177925
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 334.22222222222223
+              }
+            ],
+            "name": "cx3_1"
+          },
+          {
+            "qubits": [
+              5,
+              3
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcmMgAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.006658667905034887
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 167.11111111111111
+              }
+            ],
+            "name": "cx5_3"
+          },
+          {
+            "qubits": [
+              3,
+              5
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcmMgAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.006658667905034887
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 238.2222222222222
+              }
+            ],
+            "name": "cx3_5"
+          },
+          {
+            "qubits": [
+              6,
+              5
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcdMgAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.009496172164203343
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 334.22222222222223
+              }
+            ],
+            "name": "cx6_5"
+          },
+          {
+            "qubits": [
+              5,
+              6
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcdMgAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.009496172164203343
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 405.3333333333333
+              }
+            ],
+            "name": "cx5_6"
+          },
+          {
+            "qubits": [
+              0,
+              1
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcNLgAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.008958756306646692
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 341.3333333333333
+              }
+            ],
+            "name": "cx0_1"
+          },
+          {
+            "qubits": [
+              1,
+              0
+            ],
+            "gate": "cx",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHEQcNLgAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_error",
+                "unit": "",
+                "value": 0.008958756306646692
+              },
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHDhYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 412.4444444444444
+              }
+            ],
+            "name": "cx1_0"
+          },
+          {
+            "qubits": [
+              0
+            ],
+            "gate": "reset",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 960
+              }
+            ],
+            "name": "reset0"
+          },
+          {
+            "qubits": [
+              1
+            ],
+            "gate": "reset",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 960
+              }
+            ],
+            "name": "reset1"
+          },
+          {
+            "qubits": [
+              2
+            ],
+            "gate": "reset",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 960
+              }
+            ],
+            "name": "reset2"
+          },
+          {
+            "qubits": [
+              3
+            ],
+            "gate": "reset",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 960
+              }
+            ],
+            "name": "reset3"
+          },
+          {
+            "qubits": [
+              4
+            ],
+            "gate": "reset",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 960
+              }
+            ],
+            "name": "reset4"
+          },
+          {
+            "qubits": [
+              5
+            ],
+            "gate": "reset",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 960
+              }
+            ],
+            "name": "reset5"
+          },
+          {
+            "qubits": [
+              6
+            ],
+            "gate": "reset",
+            "parameters": [
+              {
+                "date": {
+                  "py/object": "datetime.datetime",
+                  "__reduce__": [
+                    {
+                      "py/type": "datetime.datetime"
+                    },
+                    [
+                      "B+YHERYBNwAAAA==",
+                      {
+                        "py/id": 263
+                      }
+                    ]
+                  ]
+                },
+                "name": "gate_length",
+                "unit": "ns",
+                "value": 960
+              }
+            ],
+            "name": "reset6"
+          }
+        ],
+        "general": [
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "jq_01",
+            "unit": "GHz",
+            "value": 0.0031590522071283937
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "zz_01",
+            "unit": "GHz",
+            "value": -0.00013270709743894927
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "jq_12",
+            "unit": "GHz",
+            "value": 0.003157497228425737
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "zz_12",
+            "unit": "GHz",
+            "value": -0.00012337868106558104
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "jq_45",
+            "unit": "GHz",
+            "value": 0.0032406025501911994
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "zz_45",
+            "unit": "GHz",
+            "value": -0.00015849331040112231
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "jq_56",
+            "unit": "GHz",
+            "value": 0.0017397875227948098
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "zz_56",
+            "unit": "GHz",
+            "value": -4.391095942778944e-05
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "jq_13",
+            "unit": "GHz",
+            "value": 0.002352026312825992
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "zz_13",
+            "unit": "GHz",
+            "value": -6.682142681307334e-05
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "jq_35",
+            "unit": "GHz",
+            "value": 0.0033019914549144097
+          },
+          {
+            "date": {
+              "py/object": "datetime.datetime",
+              "__reduce__": [
+                {
+                  "py/type": "datetime.datetime"
+                },
+                [
+                  "B+YHERYBNwAAAA==",
+                  {
+                    "py/id": 263
+                  }
+                ]
+              ]
+            },
+            "name": "zz_35",
+            "unit": "GHz",
+            "value": -0.00013245468115798164
+          }
+        ]
+      }
+    },
+    "circuit": {
+      "_id": "dj_6",
+      "algorithm": "dj",
+      "size": 6,
+      "circuit": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\ngate gate_Oracle q0,q1,q2,q3,q4,q5 { x q0; x q1; x q4; cx q0,q5; cx q1,q5; cx q2,q5; cx q3,q5; cx q4,q5; x q0; x q1; x q4; }\nqreg q[6];\ncreg c[5];\nx q[5];\nh q[5];\nh q[0];\nh q[1];\nh q[2];\nh q[3];\nh q[4];\ngate_Oracle q[0],q[1],q[2],q[3],q[4],q[5];\nh q[0];\nh q[1];\nh q[2];\nh q[3];\nh q[4];\nbarrier q[0],q[1],q[2],q[3],q[4],q[5];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\nmeasure q[3] -> c[3];\nmeasure q[4] -> c[4];",
+      "inverse": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\ngate gate_Oracle_dg q0,q1,q2,q3,q4,q5 { x q4; x q1; x q0; cx q4,q5; cx q3,q5; cx q2,q5; cx q1,q5; cx q0,q5; x q4; x q1; x q0; }\nqreg q[6];\nh q[4];\nh q[3];\nh q[2];\nh q[1];\nh q[0];\ngate_Oracle_dg q[0],q[1],q[2],q[3],q[4],q[5];\nh q[5];\nx q[5];\nh q[4];\nh q[3];\nh q[2];\nh q[1];\nh q[0];",
+      "mirror": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\ngate gate_Oracle q0,q1,q2,q3,q4,q5 { x q0; x q1; x q4; cx q0,q5; cx q1,q5; cx q2,q5; cx q3,q5; cx q4,q5; x q0; x q1; x q4; }\ngate gate_Oracle_dg q0,q1,q2,q3,q4,q5 { x q4; x q1; x q0; cx q4,q5; cx q3,q5; cx q2,q5; cx q1,q5; cx q0,q5; x q4; x q1; x q0; }\nqreg q[6];\ncreg meas[6];\nh q[0];\nh q[1];\nh q[2];\nh q[3];\nh q[4];\nx q[5];\nh q[5];\ngate_Oracle q[0],q[1],q[2],q[3],q[4],q[5];\nh q[0];\nh q[1];\nh q[2];\nh q[3];\nh q[4];\nbarrier q[0],q[1],q[2],q[3],q[4],q[5];\nh q[4];\nh q[3];\nh q[2];\nh q[1];\nh q[0];\ngate_Oracle_dg q[0],q[1],q[2],q[3],q[4],q[5];\nh q[5];\nx q[5];\nh q[4];\nh q[3];\nh q[2];\nh q[1];\nh q[0];\nbarrier q[0],q[1],q[2],q[3],q[4],q[5];\nmeasure q[0] -> meas[0];\nmeasure q[1] -> meas[1];\nmeasure q[2] -> meas[2];\nmeasure q[3] -> meas[3];\nmeasure q[4] -> meas[4];\nmeasure q[5] -> meas[5];",
+      "created_at": "2025-10-28T15:56:36.158000",
+      "qasm_version": "2.0"
+    }
+  },
+  "artifacts": [
+    "artifacts/8/history_circuit.jsonl",
+    "artifacts/8/history_mirror.jsonl",
+    "artifacts/8/stats.jsonl"
+  ]
+}
