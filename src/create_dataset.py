@@ -168,7 +168,7 @@ def process_all_completed(output_dir=OUTPUT_DIR):
         except Exception as e:
             print(f"[ERR] Run {run_doc['_id']}: {e}")
 
-    print(f"\nGenerated {len(summary_paths)} summaries in `{output_dir}/`")
+    print(f"Generated {len(summary_paths)} summaries in `{output_dir}/`")
 
     # Build and write histories
     generate_histories(summary_paths, output_dir)
