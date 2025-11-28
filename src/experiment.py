@@ -31,7 +31,6 @@ if not MONGO_URI:
     if not (MONGO_USER and MONGO_PASSWORD):
         raise ValueError("MONGO_INITDB_ROOT_USERNAME and MONGO_INITDB_ROOT_PASSWORD must be set if MONGO_URI is not provided.")
     MONGO_URI = f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/?authSource=admin'
-print(f"Connecting to MongoDB at {MONGO_URI}")
 client = MongoClient(MONGO_URI)
 
 # ── Sacred Experiment ────────────────────────────────────────────────
@@ -193,7 +192,11 @@ def main(circuit, size, backend, shots, batch_size, providers, n_cores, _run, _l
     batch_index = 0
     while remaining > 0:
         batch = min(batch_size, remaining)
-        data, mirror = run_batch(qc, mirror_qc, batch, executor, backends)
+        try:
+            data, mirror = run_batch(qc, mirror_qc, batch, executor, backends)
+        except RuntimeError as e:
+            print(f"Run {circuit}_{size}_{backend} failed")
+            raise RuntimeError(e)
         remaining -= batch
         timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
         batch_record = {"batch_index": batch_index, "shots": batch, "data": data[backend][0], "timestamp": timestamp}
@@ -220,3 +223,5 @@ def main(circuit, size, backend, shots, batch_size, providers, n_cores, _run, _l
     _log.info("Experiment completed successfully.")
 
     shutil.rmtree(temp_dir, ignore_errors=True)
+
+    print(f"Run {circuit}_{size}_{backend} completed")

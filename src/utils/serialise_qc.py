@@ -41,7 +41,7 @@ collection = db[COLLECTION_NAME]
 
 
 if __name__ == '__main__':
-    algs = ['ae', 'bmw_quark_cardinality', 'bv', 'dj', 'ghz', 'graphstate', 'grover', 'hhl', 'qaoa', 'qft', 'qftentangled', 'qnn', 'qpeexact', 'qpeinexact', 'qwalk', 'randomcircuit', 'vqe_real_amp', 'vqe_su2', 'vqe_two_local', 'wstate']
+    algs = ['ae', 'bmw_quark_cardinality', 'bv', 'dj', 'ghz', 'graphstate', 'grover', 'hhl', 'qft', 'qftentangled', 'qnn', 'qpeexact', 'qpeinexact', 'qwalk', 'randomcircuit', 'vqe_real_amp', 'vqe_su2', 'vqe_two_local', 'wstate']
     max_qubits = 15
     #help(mb.BenchmarkLevel)
     for n in range(4, max_qubits + 1):
