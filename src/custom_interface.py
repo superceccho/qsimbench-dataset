@@ -213,7 +213,6 @@ def open_settings():
     settings_window.rowconfigure(1, weight=1)
     settings_window.rowconfigure(2, weight=1)
     settings_window.rowconfigure(3, weight=1)
-    settings_window.rowconfigure(4, weight=1)
 
     settings_window.columnconfigure(0, weight=1)
     settings_window.columnconfigure(1, weight=1)
@@ -233,44 +232,34 @@ def open_settings():
     entry_password.insert(0, config["MONGO_INITDB_ROOT_PASSWORD"])
     entry_password.grid(row=1, column=1)
 
-    label_database = ctk.CTkLabel(settings_window, text="MongoDB database:")
-    label_database.grid(row=2, column=0)
-
-    entry_database = ctk.CTkEntry(settings_window, width=250)
-    entry_database.insert(0, config["MONGO_DATABASE"])
-    entry_database.grid(row=2, column=1)
-
     label_output = ctk.CTkLabel(settings_window, text="Output folder:")
-    label_output.grid(row=3, column=0)
+    label_output.grid(row=2, column=0)
 
     output_img = ctk.CTkImage(dark_image=Image.open("assets/folder_dark.png"), size=(30,30))
     output_folder = ctk.StringVar(value=config["OUTPUT_DIR"])
     button_output = ctk.CTkButton(settings_window, text="Choose folder", command=lambda: output_folder.set(filedialog.askdirectory(initialdir=output_folder.get())), image=output_img)
-    button_output.grid(row=3, column=1)
+    button_output.grid(row=2, column=1)
 
     def save_func():
         global config
 
         old_username = config["MONGO_INITDB_ROOT_USERNAME"]
         old_password = config["MONGO_INITDB_ROOT_PASSWORD"]
-        old_database = config["MONGO_DATABASE"]
 
         new_username = entry_username.get()
         new_password = entry_password.get()
-        new_database = entry_database.get()
 
         set_key(env_path, "MONGO_INITDB_ROOT_USERNAME", new_username)
         set_key(env_path, "MONGO_INITDB_ROOT_PASSWORD", new_password)
-        set_key(env_path, "MONGO_DATABASE", new_database)
         set_key(env_path, "OUTPUT_DIR", os.path.relpath(output_folder.get()))
 
-        if not new_username or not new_password or not new_database:
+        if not new_username or not new_password:
             clear_text()
             display_error("Invalid parameter(s)")
             return
 
         clear_text()
-        if new_username != old_username or new_password != old_password or new_database != old_database:
+        if new_username != old_username or new_password != old_password:
             display_message("Changes saved, please restart")
         else:
             display_message("Changes saved")
@@ -281,7 +270,7 @@ def open_settings():
 
     save_img = ctk.CTkImage(dark_image=Image.open("assets/save2_dark.png"), size=(30,30))
     save_button = ctk.CTkButton(settings_window, text="Save", command=save_func, image=save_img)
-    save_button.grid(row=4, column=0, columnspan=2)
+    save_button.grid(row=3, column=0, columnspan=2)
 
 settings_img = ctk.CTkImage(light_image=Image.open("assets/settings.png"), dark_image=Image.open("assets/settings_dark.png"), size=(30,30))
 settings_button = ctk.CTkButton(title_frame, image=settings_img, text="Settings", command=open_settings)
