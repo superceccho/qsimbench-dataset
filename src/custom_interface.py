@@ -72,32 +72,21 @@ def get_avaibles():
     global backends
 
     client = MongoClient(mongo_url)
-    try:
-        db_algs = client[DB_NAME_ALGS]
-        collection_algs = db_algs[COLLECTION_NAME_ALGS]
-    except:
-        algorithms = []
-        sizes = []
+    
+    db_algs = client[DB_NAME_ALGS]
+    collection_algs = db_algs[COLLECTION_NAME_ALGS]
 
-    try:
-        algorithms = collection_algs.find_one({"_id": "algorithms"})
-        algorithms = algorithms["algorithms"]
-    except:
-        algorithms = []
+    algorithms = collection_algs.find_one({"_id": "algorithms"})
+    algorithms = algorithms["algorithms"]
 
-    try:
-        sizes = collection_algs.find_one({"_id": "sizes"})
-        sizes = sizes["sizes"]
-    except:
-        sizes = []
+    sizes = collection_algs.find_one({"_id": "sizes"})
+    sizes = sizes["sizes"]
 
-    try:
-        db_backs = client[DB_NAME_BACKS]
-        collection_backs = db_backs[COLLECTION_NAME_BACKS]
-        backends = collection_backs.find_one({"_id": "backends"})
-        backends = backends["backends"]
-    except:
-        backends = []
+    db_backs = client[DB_NAME_BACKS]
+    collection_backs = db_backs[COLLECTION_NAME_BACKS]
+
+    backends = collection_backs.find_one({"_id": "backends"})
+    backends = backends["backends"]
 
 WIDTH = 1000
 HEIGHT = 600
@@ -139,7 +128,7 @@ def choose_output():
         config["OUTPUT_DIR"] = os.path.relpath(output)
 
 folder_img = ctk.CTkImage(light_image=Image.open("assets/folder.png"), dark_image=Image.open("assets/folder_dark.png"), size=(30,30))
-folder_button = ctk.CTkButton(title_frame, image=folder_img, text="Choose output folder", command=choose_output)
+folder_button = ctk.CTkButton(title_frame, image=folder_img, text="Choose\noutput folder", command=choose_output)
 folder_button.configure(state="disabled")
 folder_button.grid(row=0, column=2)
 
@@ -536,7 +525,7 @@ def init_func():
     def close_compose():
         subprocess.run(["docker", "compose", "down"])
     
-    display_message("Starting docker compose...")
+    display_message("Starting docker compose...\n")
     subprocess.run(["docker", "compose", "up", "-d"], check=True)
     atexit.register(close_compose)
 

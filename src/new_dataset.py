@@ -76,7 +76,7 @@ vm = psutil.virtual_memory()
 metadata["memory_total_GB"] = round(vm.total / (1024**3), 2)
 metadata["memory_available_GB"] = round(vm.available / (1024**3), 2)
 
-libraries=subprocess.getoutput("pip freeze").splitlines()
+libraries=subprocess.getoutput("uv pip freeze").splitlines()
 metadata["libraries"]=libraries
 
 print("Metadata created")
