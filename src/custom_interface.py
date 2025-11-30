@@ -132,83 +132,16 @@ logo_img = ctk.CTkImage(light_image=Image.open("assets/atom.png"), dark_image=Im
 logo_label = ctk.CTkLabel(title_frame, image=logo_img, compound="none")
 logo_label.grid(row=0, column=0)
 
-def open_settings():
-    SETTINGS_WIDTH = 500
-    SETTINGS_HEIGHT = 300
-    settings_window = ctk.CTkToplevel(root)
-    settings_window.title("Settings")
-    settings_window.geometry(f"{SETTINGS_WIDTH}x{SETTINGS_HEIGHT}+{screen_w//2 - SETTINGS_WIDTH//2}+{screen_h//2 - SETTINGS_HEIGHT//2}")
-    settings_window.transient(root)
-    settings_window.update_idletasks()
-    settings_window.grab_set()
-    settings_window.focus_set()
+def choose_output():
+    output = ctk.filedialog.askdirectory(initialdir=config["OUTPUT_DIR"])
+    if output:
+        set_key(env_path, "OUTPUT_DIR", os.path.relpath(output))
+        config["OUTPUT_DIR"] = os.path.relpath(output)
 
-    settings_window.rowconfigure(0, weight=1)
-    settings_window.rowconfigure(1, weight=1)
-    settings_window.rowconfigure(2, weight=1)
-    settings_window.rowconfigure(3, weight=1)
-
-    settings_window.columnconfigure(0, weight=1)
-    settings_window.columnconfigure(1, weight=1)
-
-    label_username = ctk.CTkLabel(settings_window, text="MongoDB username:")
-    label_username.grid(row=0, column=0)
-
-    entry_username = ctk.CTkEntry(settings_window, width=250)
-    entry_username.insert(0, config["MONGO_INITDB_ROOT_USERNAME"])
-    entry_username.grid(row=0, column=1)
-    entry_username.focus_set()
-
-    label_password = ctk.CTkLabel(settings_window, text="MongoDB password:")
-    label_password.grid(row=1, column=0)
-
-    entry_password = ctk.CTkEntry(settings_window, width=250, show="*")
-    entry_password.insert(0, config["MONGO_INITDB_ROOT_PASSWORD"])
-    entry_password.grid(row=1, column=1)
-
-    label_output = ctk.CTkLabel(settings_window, text="Output folder:")
-    label_output.grid(row=2, column=0)
-
-    output_img = ctk.CTkImage(dark_image=Image.open("assets/folder_dark.png"), size=(30,30))
-    output_folder = ctk.StringVar(value=config["OUTPUT_DIR"])
-    button_output = ctk.CTkButton(settings_window, text="Choose folder", command=lambda: output_folder.set(filedialog.askdirectory(initialdir=output_folder.get())), image=output_img)
-    button_output.grid(row=2, column=1)
-
-    def save_func():
-        global config
-
-        old_username = config["MONGO_INITDB_ROOT_USERNAME"]
-        old_password = config["MONGO_INITDB_ROOT_PASSWORD"]
-
-        new_username = entry_username.get()
-        new_password = entry_password.get()
-
-        set_key(env_path, "MONGO_INITDB_ROOT_USERNAME", new_username)
-        set_key(env_path, "MONGO_INITDB_ROOT_PASSWORD", new_password)
-        set_key(env_path, "OUTPUT_DIR", os.path.relpath(output_folder.get()))
-
-        if not new_username or not new_password:
-            clear_text()
-            display_error("Invalid parameter(s)")
-            return
-
-        clear_text()
-        if new_username != old_username or new_password != old_password:
-            display_message("Changes saved, please restart")
-        else:
-            display_message("Changes saved")
-
-        config = dotenv_values(env_path)
-
-        settings_window.destroy()
-
-    save_img = ctk.CTkImage(dark_image=Image.open("assets/save2_dark.png"), size=(30,30))
-    save_button = ctk.CTkButton(settings_window, text="Save", command=save_func, image=save_img)
-    save_button.grid(row=3, column=0, columnspan=2)
-
-settings_img = ctk.CTkImage(light_image=Image.open("assets/settings.png"), dark_image=Image.open("assets/settings_dark.png"), size=(30,30))
-settings_button = ctk.CTkButton(title_frame, image=settings_img, text="Settings", command=open_settings)
-settings_button.grid(row=0, column=2)
+folder_img = ctk.CTkImage(light_image=Image.open("assets/folder.png"), dark_image=Image.open("assets/folder_dark.png"), size=(30,30))
+folder_button = ctk.CTkButton(title_frame, image=folder_img, text="Choose output folder", command=choose_output)
+folder_button.configure(state="disabled")
+folder_button.grid(row=0, column=2)
 
 run_parameters_frame = ctk.CTkFrame(root, fg_color="#3B3B3B")
 run_parameters_frame.grid(row=1, column=0, sticky="ew", padx=10, ipadx=5)
@@ -430,7 +363,7 @@ def open_delete():
         def thread_func():
             start_button.configure(state="disabled")
             delete_button.configure(state="disabled")
-            settings_button.configure(state="disabled")
+            folder_button.configure(state="disabled")
 
             clear_text()
 
@@ -458,7 +391,7 @@ def open_delete():
 
             start_button.configure(state="normal")
             delete_button.configure(state="normal")
-            settings_button.configure(state="normal")
+            folder_button.configure(state="normal")
 
         thread = threading.Thread(target=thread_func)
         thread.start()
@@ -551,7 +484,7 @@ def start_func():
     def thread_func():
         start_button.configure(state="disabled")
         delete_button.configure(state="disabled")
-        settings_button.configure(state="disabled")
+        folder_button.configure(state="disabled")
 
         clear_text()
         display_message("Starting...\n")
@@ -578,7 +511,7 @@ def start_func():
         versions.append(new_name)
         start_button.configure(state="normal")
         delete_button.configure(state="normal")
-        settings_button.configure(state="normal")
+        folder_button.configure(state="normal")
 
         progress_bar.destroy()
         
@@ -603,6 +536,7 @@ def init_func():
     def close_compose():
         subprocess.run(["docker", "compose", "down"])
     
+    display_message("Starting docker compose...")
     subprocess.run(["docker", "compose", "up", "-d"], check=True)
     atexit.register(close_compose)
 
@@ -656,7 +590,7 @@ def init_func():
 
     start_button.configure(state="normal")
     delete_button.configure(state="normal")
-    settings_button.configure(state="normal")
+    folder_button.configure(state="normal")
 
     clear_text()
     display_message("Ready!")
