@@ -10,7 +10,6 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from pathlib import Path
 dotenv_path = Path(__file__).parent.parent.parent / "src" / ".env"
-print("Loading environment variables from:", dotenv_path)
 load_dotenv(dotenv_path=dotenv_path)
 
 MONGO_HOST = 'localhost'
@@ -22,8 +21,6 @@ DB_NAME = 'quantum_backends'
 COLLECTION_NAME = 'qiskit_fake_backends'
 
 mongo_url = f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/'
-
-print(f"Connecting to MongoDB at {mongo_url}")
 
 client = MongoClient(mongo_url)
 db = client[DB_NAME]
@@ -105,14 +102,9 @@ if __name__ == '__main__':
     qe = QuantumExecutor(providers=["local_aer"])
     backends = [b._backend for b in list(qe.virtual_provider.get_backends()["local_aer"].values())]
 
-
-    print(f"Found {len(backends)} backends to serialize.")
-    print("Backends:", [b.name for b in backends])
+    print(len(backends))
     serialize_backends(backends)
-    
-    fake_algiers = load_backend('fake_algiers')
-    print("Loaded Fake Algiers Backend:", fake_algiers)
-    
-    aer_sim = load_backend('aer_simulator')
-    print("Loaded AerSimulator:", aer_sim)
+
+    backends_doc = {"_id": "backends", "backends": [b.name for b in backends]}
+    collection.insert_one(backends_doc)
 

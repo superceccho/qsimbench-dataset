@@ -20,6 +20,7 @@ from pymongo import MongoClient
 
 from dotenv import load_dotenv
 from pathlib import Path
+import json
 
 load_dotenv()
 
@@ -33,20 +34,16 @@ COLLECTION_NAME = 'mqt.bench==1.1.9'
 
 mongo_url = f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/'
 
-print(f"Connecting to MongoDB at {mongo_url}")
-
 client = MongoClient(mongo_url)
 db = client[DB_NAME]
 collection = db[COLLECTION_NAME]
 
-
 if __name__ == '__main__':
     algs = ['ae', 'bmw_quark_cardinality', 'bv', 'dj', 'ghz', 'graphstate', 'grover', 'hhl', 'qft', 'qftentangled', 'qnn', 'qpeexact', 'qpeinexact', 'qwalk', 'randomcircuit', 'vqe_real_amp', 'vqe_su2', 'vqe_two_local', 'wstate']
     max_qubits = 15
-    #help(mb.BenchmarkLevel)
+    print((max_qubits - 3) * len(algs))
     for n in range(4, max_qubits + 1):
         for alg in algs:
-            print(f"Serializing benchmark for {alg} with {n} qubits")
             # Get the benchmark for the algorithm and number of qubits
             qc = get_benchmark(benchmark=alg, level=mb.BenchmarkLevel.ALG, circuit_size=n, random_parameters=True)
             #qc_decomposed = qc.decompose(reps=2)
@@ -84,6 +81,11 @@ if __name__ == '__main__':
                 print(f"Successfully inserted benchmark for {alg} with {n} qubits")
             except Exception as e:
                 print(f"Error inserting benchmark for {alg} with {n} qubits: {e}")
-                
+
+    algorithms = {"_id": "algorithms", "algorithms": algs}
+    collection.insert_one(algorithms)
+
+    sizes = {"_id": "sizes", "sizes": list(range(4, max_qubits+1))}
+    collection.insert_one(sizes)
 
 

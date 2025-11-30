@@ -14,85 +14,29 @@ import sys
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("theme.json")
 
+first_time = False
+
 env_path = ".env"
 
-def open_welcome():
-    welcome_window = ctk.CTk()
-    welcome_window.update_idletasks()
-
-    screen_w = welcome_window.winfo_screenwidth()
-    screen_h = welcome_window.winfo_screenheight()
-
-    WELCOME_WIDTH = 700
-    WELCOME_HEIGHT = 500
-    welcome_window.geometry(f"{WELCOME_WIDTH}x{WELCOME_HEIGHT}+{screen_w//2 - WELCOME_WIDTH//2}+{screen_h//2 - WELCOME_HEIGHT//2}")
-    welcome_window.title("QSimBench")
-
-    welcome_window.rowconfigure(0, weight=1)
-    welcome_window.rowconfigure(1, weight=2)
-    welcome_window.rowconfigure(2, weight=2)
-    welcome_window.rowconfigure(3, weight=1)
-    welcome_window.rowconfigure(4, weight=1)
-
-    welcome_window.columnconfigure(0, weight=1)
-    welcome_window.columnconfigure(1, weight=1)
-
-    title_label = ctk.CTkLabel(welcome_window, text="Welcome to QSimBench", font=("", 50, "bold"))
-    title_label.grid(row=0, column=0, columnspan=2)
-
-    username_label = ctk.CTkLabel(welcome_window, text="MongoDB username:")
-    username_label.grid(row=1, column=0)
-
-    username_entry = ctk.CTkEntry(welcome_window, width=300)
-    username_entry.grid(row=1, column=1)
-
-    password_label = ctk.CTkLabel(welcome_window, text="MongoDB password:")
-    password_label.grid(row=2, column=0)
-
-    password_entry = ctk.CTkEntry(welcome_window, width=300, show="*")
-    password_entry.grid(row=2, column=1)
-
-    def save_func():
-        if not username_entry.get() or not password_entry.get():
-            response_text.configure(state="normal")
-            response_text.delete(0.0, ctk.END)
-            response_text.insert(ctk.END, "[ERR]Insert all data")
-            response_text.configure(state="disabled")
-            return
-        
-        with open(env_path, "w") as file:
-            file.write(f"MONGO_INITDB_ROOT_USERNAME={username_entry.get()}\n" \
-                       f"MONGO_INITDB_ROOT_PASSWORD={password_entry.get()}\n" \
-                        "MONGO_DATABASE=sacred\n" \
-                        "VERSION_NAME=\n" \
-                        "OUTPUT_DIR=../dataset\n" \
-                        "ALGORITHMS=[]\n" \
-                        "SIZES=[]\n" \
-                        "BACKENDS=[]\n" \
-                        "SHOTS=\n" \
-                        "N_CORES=\n" \
-                        "JOBS=\n" \
-                        "LOAD=\n" \
-                        "MEMFREE=\n" \
-                        "MEMSUSPEND=\n" \
-                        "DELAY=\n")
-            
-        welcome_window.quit()
-        welcome_window.destory()
-
-    save_button = ctk.CTkButton(welcome_window, text="Let's start!", command=save_func)
-    save_button.grid(row=3, column=0, columnspan=2)
-
-    response_text = ctk.CTkTextbox(welcome_window, state="disabled", wrap="word", height=60, width=300, text_color="red")
-    response_text.grid(row=4, column=0, columnspan=2)
-
-    welcome_window.mainloop()
-
 if not os.path.exists(env_path):
-    open_welcome()
+    first_time=True
 
-if not os.path.exists(env_path):
-    sys.exit(0)
+    with open(env_path, "w") as file:
+        file.write("MONGO_INITDB_ROOT_USERNAME=qsimbench\n" \
+                    "MONGO_INITDB_ROOT_PASSWORD=qsimbench2025\n" \
+                    "MONGO_DATABASE=sacred\n" \
+                    "VERSION_NAME=\n" \
+                    "OUTPUT_DIR=../dataset\n" \
+                    "ALGORITHMS=[]\n" \
+                    "SIZES=[]\n" \
+                    "BACKENDS=[]\n" \
+                    "SHOTS=\n" \
+                    "N_CORES=\n" \
+                    "JOBS=\n" \
+                    "LOAD=\n" \
+                    "MEMFREE=\n" \
+                    "MEMSUSPEND=\n" \
+                    "DELAY=\n")
 
 config = dotenv_values(env_path)
 
@@ -110,16 +54,6 @@ def clear_text():
     response_text.configure(state="normal")
     response_text.delete(0.0, ctk.END)
     response_text.configure(state="disabled")
-
-def close_compose():
-    subprocess.run(["docker", "compose", "down"])
-
-subprocess.run(["docker", "compose", "up", "-d"], check=True)
-atexit.register(close_compose)
-
-algorithms = []
-sizes = []
-backends = []
 
 def get_avaibles():
     MONGO_USER = config['MONGO_INITDB_ROOT_USERNAME']
@@ -276,8 +210,6 @@ settings_img = ctk.CTkImage(light_image=Image.open("assets/settings.png"), dark_
 settings_button = ctk.CTkButton(title_frame, image=settings_img, text="Settings", command=open_settings)
 settings_button.grid(row=0, column=2)
 
-get_avaibles()
-
 run_parameters_frame = ctk.CTkFrame(root, fg_color="#3B3B3B")
 run_parameters_frame.grid(row=1, column=0, sticky="ew", padx=10, ipadx=5)
 
@@ -317,13 +249,6 @@ algorithms_outer_frame.columnconfigure(1, weight=1)
 algorithms_inner_frame = ctk.CTkScrollableFrame(algorithms_outer_frame, label_text="Algorithms:")
 algorithms_inner_frame.grid(row=0, column=0, columnspan=2)
 
-algorithms_buttons = []
-for algorithm in algorithms:
-    button = ctk.CTkButton(algorithms_inner_frame, text=algorithm, corner_radius=0, border_width=0, fg_color="#3B3B3B" if algorithm in json.loads(config["ALGORITHMS"]) else "#242424", hover_color="#3B3B3B")
-    button.configure(command=lambda b=button: button_selection(b))
-    button.pack(fill=ctk.X)
-    algorithms_buttons.append(button)
-
 select_algs = ctk.CTkButton(algorithms_outer_frame, text="Select all", command=lambda: select_all(algorithms_buttons), border_width=0, fg_color="#3B3B3B", width=100)
 select_algs.grid(row=1, column=0, padx=5, pady=5)
 
@@ -342,13 +267,6 @@ sizes_outer_frame.columnconfigure(1, weight=1)
 sizes_inner_frame = ctk.CTkScrollableFrame(sizes_outer_frame, label_text="Sizes:")
 sizes_inner_frame.grid(row=0, column=0, columnspan=2)
 
-sizes_buttons = []
-for size in sizes:
-    button = ctk.CTkButton(sizes_inner_frame, text=size, corner_radius=0, border_width=0, fg_color="#3B3B3B" if size in json.loads(config["SIZES"]) else "#242424", hover_color="#3B3B3B")
-    button.configure(command=lambda b=button: button_selection(b))
-    sizes_buttons.append(button)
-    button.pack(fill=ctk.X)
-
 select_sizes = ctk.CTkButton(sizes_outer_frame, text="Select all", command=lambda: select_all(sizes_buttons), width=100, fg_color="#3B3B3B", border_width=0)
 select_sizes.grid(row=1, column=0, padx=5, pady=5)
 
@@ -366,13 +284,6 @@ backends_outer_frame.columnconfigure(1, weight=1)
 
 backends_inner_frame = ctk.CTkScrollableFrame(backends_outer_frame, label_text="Backends:")
 backends_inner_frame.grid(row=0, column=0 ,columnspan=2)
-
-backends_buttons = []
-for backend in backends:
-    button = ctk.CTkButton(backends_inner_frame, text=backend, corner_radius=0, border_width=0, fg_color="#3B3B3B" if backend in json.loads(config["BACKENDS"]) else "#242424", hover_color="#3B3B3B")
-    button.configure(command=lambda b=button: button_selection(b))
-    button.pack(fill=ctk.X)
-    backends_buttons.append(button)
 
 select_backs = ctk.CTkButton(backends_outer_frame, text="Select all", command=lambda: select_all(backends_buttons), width=100, fg_color="#3B3B3B", border_width=0)
 select_backs.grid(row=1, column=0, padx=5, pady=5)
@@ -559,6 +470,7 @@ def open_delete():
 
 delete_img = ctk.CTkImage(dark_image=Image.open("assets/trash_dark.png"), size=(30,30))
 delete_button = ctk.CTkButton(lower_frame, text="Delete versions", image=delete_img, command=open_delete)
+delete_button.configure(state="disabled")
 delete_button.grid(row=0, column=0, rowspan=2)
 
 versions = []
@@ -675,6 +587,81 @@ def start_func():
     
 start_img = ctk.CTkImage(dark_image=Image.open("assets/atom_dark.png"), size=(30,30))
 start_button = ctk.CTkButton(lower_frame, text="Start", command=start_func, image=start_img)
+start_button.configure(state="disabled")
 start_button.grid(row=0, column=2, rowspan=2)
+
+algorithms = []
+sizes = []
+backends = []
+
+algorithms_buttons = []
+sizes_buttons = []
+backends_buttons = []
+
+def init_func():
+
+    def close_compose():
+        subprocess.run(["docker", "compose", "down"])
+    
+    subprocess.run(["docker", "compose", "up", "-d"], check=True)
+    atexit.register(close_compose)
+
+    if first_time:
+        progress_bar = ctk.CTkProgressBar(lower_frame, width=450, height=15)
+        progress_bar.grid(row=1, column=1, pady=5)
+
+        display_message("Serializing circuits...\n")
+        progress_bar.set(0)
+        process = subprocess.Popen(["python", "-u", "utils/serialise_qc.py"], stdout=subprocess.PIPE, text=True, bufsize=1)
+        count = int(process.stdout.readline())
+        bar_step = 1 / count
+
+        for _ in process.stdout:
+            progress_bar.set(progress_bar.get() + bar_step)
+
+        display_message("Circuits serialized\n")
+
+        display_message("Serializing backends...\n")
+        progress_bar.set(0)
+        process = subprocess.Popen(["python", "-u", "utils/serialise_qpu.py"], stdout=subprocess.PIPE, text=True, bufsize=1)
+        count = int(process.stdout.readline())
+        bar_step = 1 / count
+
+        for _ in process.stdout:
+            progress_bar.set(progress_bar.get() + bar_step)
+
+        display_message("Backends serialized\n")
+
+        progress_bar.destroy()
+
+    get_avaibles()
+    
+    for algorithm in algorithms:
+        button = ctk.CTkButton(algorithms_inner_frame, text=algorithm, corner_radius=0, border_width=0, fg_color="#3B3B3B" if algorithm in json.loads(config["ALGORITHMS"]) else "#242424", hover_color="#3B3B3B")
+        button.configure(command=lambda b=button: button_selection(b))
+        button.pack(fill=ctk.X)
+        algorithms_buttons.append(button)
+
+    for size in sizes:
+        button = ctk.CTkButton(sizes_inner_frame, text=size, corner_radius=0, border_width=0, fg_color="#3B3B3B" if size in json.loads(config["SIZES"]) else "#242424", hover_color="#3B3B3B")
+        button.configure(command=lambda b=button: button_selection(b))
+        sizes_buttons.append(button)
+        button.pack(fill=ctk.X)
+
+    for backend in backends:
+        button = ctk.CTkButton(backends_inner_frame, text=backend, corner_radius=0, border_width=0, fg_color="#3B3B3B" if backend in json.loads(config["BACKENDS"]) else "#242424", hover_color="#3B3B3B")
+        button.configure(command=lambda b=button: button_selection(b))
+        button.pack(fill=ctk.X)
+        backends_buttons.append(button)
+
+    start_button.configure(state="normal")
+    delete_button.configure(state="normal")
+    settings_button.configure(state="normal")
+
+    clear_text()
+    display_message("Ready!")
+    
+init_thread = threading.Thread(target=init_func)
+init_thread.start()
 
 root.mainloop()
