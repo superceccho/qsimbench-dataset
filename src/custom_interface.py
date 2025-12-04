@@ -1,5 +1,4 @@
 import customtkinter as ctk
-from customtkinter import filedialog
 
 from PIL import Image
 from dotenv import dotenv_values, set_key
@@ -9,7 +8,7 @@ import subprocess
 import atexit
 from pymongo import MongoClient
 import threading
-import sys
+import re
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("theme.json")
@@ -107,30 +106,8 @@ root.rowconfigure(2, weight=2)
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 
-title_frame = ctk.CTkFrame(root)
-title_frame.grid(row=0, column=0, sticky="ew", columnspan=2)
-
-title_frame.columnconfigure(0, weight=1)
-title_frame.columnconfigure(1, weight=1)
-title_frame.columnconfigure(2, weight=1)
-
-title_label = ctk.CTkLabel(title_frame, text="QSimBench\nDataset Manager", font=("DejaVu Sans", 50, "bold"))
-title_label.grid(row=0, column=1, )
-
-logo_img = ctk.CTkImage(light_image=Image.open("assets/atom.png"), dark_image=Image.open("assets/atom_dark.png"), size=(100,100))
-logo_label = ctk.CTkLabel(title_frame, image=logo_img, compound="none")
-logo_label.grid(row=0, column=0)
-
-def choose_output():
-    output = ctk.filedialog.askdirectory(initialdir=config["OUTPUT_DIR"])
-    if output:
-        set_key(env_path, "OUTPUT_DIR", os.path.relpath(output))
-        config["OUTPUT_DIR"] = os.path.relpath(output)
-
-folder_img = ctk.CTkImage(light_image=Image.open("assets/folder.png"), dark_image=Image.open("assets/folder_dark.png"), size=(30,30))
-folder_button = ctk.CTkButton(title_frame, image=folder_img, text="Choose\noutput folder", command=choose_output)
-folder_button.configure(state="disabled")
-folder_button.grid(row=0, column=2)
+title_label = ctk.CTkLabel(root, text="QSimBench Dataset Manager", font=("DejaVu Sans", 50, "bold"))
+title_label.grid(row=0, column=0, columnspan=2)
 
 run_parameters_frame = ctk.CTkFrame(root, fg_color="#3B3B3B")
 run_parameters_frame.grid(row=1, column=0, sticky="ew", padx=10, ipadx=5)
@@ -269,14 +246,14 @@ memfree_label = ctk.CTkLabel(parallel_parameters_frame, text="Memfree:", fg_colo
 memfree_label.grid(row=3, column=0)
 
 memfree_entry = ctk.CTkEntry(parallel_parameters_frame, border_width=0, width=100)
-memfree_entry.insert(0, config["MEMFREE"].rstrip("G"))
+memfree_entry.insert(0, config["MEMFREE"])
 memfree_entry.grid(row=3, column=1)
 
 memsuspend_label = ctk.CTkLabel(parallel_parameters_frame, text="Memsuspend", fg_color="#3B3B3B")
 memsuspend_label.grid(row=4, column=0)
 
 memsuspend_entry = ctk.CTkEntry(parallel_parameters_frame, border_width=0, width=100)
-memsuspend_entry.insert(0, config["MEMSUSPEND"].rstrip("G"))
+memsuspend_entry.insert(0, config["MEMSUSPEND"])
 memsuspend_entry.grid(row=4, column=1)
 
 delay_label = ctk.CTkLabel(parallel_parameters_frame, text="Delay:", fg_color="#3B3B3B")
@@ -352,7 +329,6 @@ def open_delete():
         def thread_func():
             start_button.configure(state="disabled")
             delete_button.configure(state="disabled")
-            folder_button.configure(state="disabled")
 
             clear_text()
 
@@ -380,7 +356,6 @@ def open_delete():
 
             start_button.configure(state="normal")
             delete_button.configure(state="normal")
-            folder_button.configure(state="normal")
 
         thread = threading.Thread(target=thread_func)
         thread.start()
@@ -402,15 +377,18 @@ if os.path.exists(vers_path):
         versions = json.load(file)
 
 def start_func():
+    clear_text()
+    
+    error=False
+
     chosen_algorithms = []
     for button in algorithms_buttons:
         if button.cget("fg_color") == "#3B3B3B":
             chosen_algorithms.append(button.cget("text"))
 
     if not chosen_algorithms:
-        clear_text()
-        display_error("No algorithms selected")
-        return
+        display_error("No algorithms selected\n")
+        error=True
     
     chosen_sizes = []
     for button in sizes_buttons:
@@ -418,9 +396,8 @@ def start_func():
             chosen_sizes.append(button.cget("text"))
             
     if not chosen_sizes:
-        clear_text()
-        display_error("No sizes selected")
-        return
+        display_error("No sizes selected\n")
+        error=True
     
     chosen_backends = []
     for button in backends_buttons:
@@ -428,27 +405,56 @@ def start_func():
             chosen_backends.append(button.cget("text"))
             
     if not chosen_backends:
-        clear_text()
-        display_error("No algorithms selected")
-        return
+        display_error("No backends selected\n")
+        error=True
     
-    shots = shots_entry.get().strip()
-    cores = cores_entry.get().strip()
-    jobs = jobs_entry.get().strip()
-    load = load_entry.get().strip()
+    shots = shots_entry.get().strip().lstrip("0")
+    if not shots.isdigit():
+        display_error("Invalid shots count\n")
+        error=True
+
+    cores = cores_entry.get().strip().lstrip("0")
+    if not cores.isdigit() and not cores == "all":
+        display_error("Invalid cores count\n")
+        error=True
+
+    jobs = jobs_entry.get().strip().lstrip("0")
+    if not jobs.isdigit():
+        display_error("Invalid jobs parameter\n")
+        error=True
+
+    load = load_entry.get().strip().lstrip("0")
+    if not load.isdigit():
+        display_error("Invalid load parameter\n")
+        error=True
+
+    regex = "^[0-9]+([KMGTPkmgpt])?$"
+    
     memfree = memfree_entry.get().strip()
+    if not re.match(regex, memfree) or (len(memfree) > 2 and memfree[0] == "0"):
+        display_error("Invalid memfree parameter\n")
+        error=True
+
     memsuspend = memsuspend_entry.get().strip()
-    delay = delay_entry.get().strip()
+    if not re.match(regex, memsuspend) or (len(memsuspend) > 2 and memsuspend == "0"):
+        display_error("Invalid memsuspend parameter\n")
+        error=True
+    
+    delay = delay_entry.get().strip().lstrip("0")
+    if not delay.isdigit():
+        display_error("Invalid delay parameter\n")
+        error=True
+
     new_name = version_entry.get().strip()
-
-    if not shots.isdigit() or int(shots) == 0 or not cores.isdigit() or not jobs.isdigit() or not load.isdigit or not memfree.isdigit() or not memsuspend.isdigit() or not delay.isdigit() or not new_name or " " in new_name:
-        clear_text()
-        display_error("Invalid parameter(s)")
-        return
-
+    if not new_name or " " in new_name:
+        display_error("Invalid versions name\n")
+        error=True
     if new_name in versions:
-        clear_text()
-        display_error("Version name already used")
+        display_error("Version name already used\n")
+        error=True
+
+    if error:
+        response_text.see(ctk.END)
         return
     
     set_key(env_path, "ALGORITHMS", json.dumps(chosen_algorithms))
@@ -458,8 +464,8 @@ def start_func():
     set_key(env_path, "N_CORES", str(cores))
     set_key(env_path, "JOBS", str(jobs))
     set_key(env_path, "LOAD", str(load))
-    set_key(env_path, "MEMFREE", str(memfree)+"G")
-    set_key(env_path, "MEMSUSPEND", str(memsuspend)+"G")
+    set_key(env_path, "MEMFREE", str(memfree))
+    set_key(env_path, "MEMSUSPEND", str(memsuspend))
     set_key(env_path, "DELAY", str(delay))
     set_key(env_path, "VERSION_NAME", new_name)
 
@@ -473,7 +479,6 @@ def start_func():
     def thread_func():
         start_button.configure(state="disabled")
         delete_button.configure(state="disabled")
-        folder_button.configure(state="disabled")
 
         clear_text()
         display_message("Starting...\n")
@@ -500,7 +505,6 @@ def start_func():
         versions.append(new_name)
         start_button.configure(state="normal")
         delete_button.configure(state="normal")
-        folder_button.configure(state="normal")
 
         progress_bar.destroy()
         
@@ -579,7 +583,6 @@ def init_func():
 
     start_button.configure(state="normal")
     delete_button.configure(state="normal")
-    folder_button.configure(state="normal")
 
     clear_text()
     display_message("Ready!")

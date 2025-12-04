@@ -1,13 +1,3 @@
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#     "mqt-bench",
-#     "pymongo",
-#     "python-dotenv",
-#     "qiskit<2",
-# ]
-# ///
-
 from pymongo import MongoClient
 
 from mqt.bench import get_benchmark

@@ -18,7 +18,7 @@ ALGORITHMS=json.loads(os.getenv("ALGORITHMS"))
 SIZES=json.loads(os.getenv("SIZES"))
 BACKENDS=json.loads(os.getenv("BACKENDS"))
 SHOTS=os.getenv("SHOTS", 20000)
-N_CORES=os.getenv("N_CORES")
+N_CORES= os.getenv("N_CORES") if os.getenv("N_CORES") != "all" else None
 if not ALGORITHMS or not SIZES or not BACKENDS:
     raise QSimBenchError("Empty run parameter(s)")
 
@@ -77,6 +77,7 @@ metadata["memory_total_GB"] = round(vm.total / (1024**3), 2)
 metadata["memory_available_GB"] = round(vm.available / (1024**3), 2)
 
 libraries=subprocess.getoutput("uv pip freeze").splitlines()
+libraries.pop(0)
 metadata["libraries"]=libraries
 
 print("Metadata created")
