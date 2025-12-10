@@ -1,17 +1,20 @@
 {
-  "version": "",
+  "version": "prova",
   "algorithms": [
-    "dj"
+    "dj",
+    "ghz"
   ],
   "sizes": [
-    4
+    4,
+    5
   ],
   "backends": [
-    "aer_simulator"
+    "aer_simulator",
+    "fake_torino"
   ],
   "shots": "1000",
-  "start_time": "15:20:30",
-  "end_time": "15:21:41",
+  "start_time": "15:28:33",
+  "end_time": "15:44:30",
   "date": "2025-12-10",
   "os": "Linux",
   "os_version": "#87-Ubuntu SMP PREEMPT_DYNAMIC Mon Sep 22 18:03:36 UTC 2025",
@@ -27,7 +30,7 @@
     "max": 0.0
   },
   "memory_total_GB": 7.67,
-  "memory_available_GB": 6.11,
+  "memory_available_GB": 5.98,
   "libraries": [
     "amazon-braket-default-simulator==1.32.0",
     "amazon-braket-schemas==1.27.0",
