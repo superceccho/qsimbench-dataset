@@ -7,6 +7,7 @@ import json
 import threading
 import tempfile
 import shutil
+from datetime import datetime
 
 from pathlib import Path
 from sacred import Experiment
@@ -16,6 +17,8 @@ from pymongo import MongoClient
 import psutil
 from typing import Any
 import logging
+
+from utils.serialise_qpu import load_backend
 
 # ── Load environment ──────────────────────────────────────────────────
 load_dotenv()
@@ -31,7 +34,6 @@ if not MONGO_URI:
     if not (MONGO_USER and MONGO_PASSWORD):
         raise ValueError("MONGO_INITDB_ROOT_USERNAME and MONGO_INITDB_ROOT_PASSWORD must be set if MONGO_URI is not provided.")
     MONGO_URI = f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/?authSource=admin'
-print(f"Connecting to MongoDB at {MONGO_URI}")
 client = MongoClient(MONGO_URI)
 
 # ── Sacred Experiment ────────────────────────────────────────────────
@@ -100,25 +102,18 @@ def load_qasm_from_mongo(circuit_name: str, size: int, db_name="quantum_circuit"
     return qc, mirror_qc
 
 @ex.capture
-def run_batch(qc: Any, mirror_qc: Any, shots: int, executor: Any, backends: dict, max_retries: int = 1, _log=None):
-    for _ in range(max_retries):
-        try:
-            _log.debug("RUN_BATCH PARAMETERS: %s, %s, %s", qc, mirror_qc, shots)
-            job_data = executor.run_experiment(qc.copy(), shots, backends, "multiplier", multiprocess=False, wait=True)
-            job_mirror = executor.run_experiment(mirror_qc.copy(), shots, backends, "multiplier", multiprocess=False, wait=True)
-            data = job_data.get_results()["local_aer"]
-            mirror = job_mirror.get_results()["local_aer"]
-            for b in backends["local_aer"]:
-                err = data[b][0].get("error") or mirror[b][0].get("error")
-                if err:
-                    _log.error(f"{b}: {err}")
-                    raise RuntimeError(err)
-            return data, mirror
-        except Exception as exc:
-            if max_retries > 1:
-                _log.warning(f"Retry after error: {exc}")
-                time.sleep(1)
-    raise RuntimeError("Max retries exhausted.")
+def run_batch(qc: Any, mirror_qc: Any, shots: int, executor: Any, backends: dict, _log=None):
+        _log.debug("RUN_BATCH PARAMETERS: %s, %s, %s", qc, mirror_qc, shots)
+        job_data = executor.run_experiment(qc.copy(), shots, backends, "multiplier", multiprocess=False, wait=True)
+        job_mirror = executor.run_experiment(mirror_qc.copy(), shots, backends, "multiplier", multiprocess=False, wait=True)
+        data = job_data.get_results()["local_aer"]
+        mirror = job_mirror.get_results()["local_aer"]
+        for b in backends["local_aer"]:
+            err = data[b][0].get("error") or mirror[b][0].get("error")
+            if err:
+                _log.error(f"{b}: {err}")
+                raise RuntimeError(err)
+        return data, mirror
 
 # ── Configuration ──────────────────────────────────────────
 @ex.config
@@ -134,6 +129,7 @@ def cfg():
 # ── Main Entrypoint ──────────────────────────────────────────
 @ex.automain
 def main(circuit, size, backend, shots, batch_size, providers, n_cores, _run, _log):
+    start_time = datetime.now()
     if n_cores is not None:
         os.environ["OMP_NUM_THREADS"] = str(n_cores)
         os.environ["OPENBLAS_NUM_THREADS"] = str(n_cores)
@@ -157,11 +153,12 @@ def main(circuit, size, backend, shots, batch_size, providers, n_cores, _run, _l
     executor = QuantumExecutor(providers=providers)
     backends = {"local_aer": [backend]}
 
-    _backend = executor.virtual_provider.get_backend(provider_name=providers[0], backend_name=backend)._backend
+    #_backend = executor.virtual_provider.get_backend(provider_name=providers[0], backend_name=backend)._backend
+    _backend = load_backend(backend)
     _run.info["backend"] = {
         "name": backend,
-        "configuration": _backend.configuration().to_dict(),
-        "properties": _backend.properties().to_dict() if hasattr(_backend, 'properties') and _backend.properties() else {}
+        "configuration": _backend.configuration(),
+        "properties": _backend.properties() if hasattr(_backend, 'properties') and _backend.properties() else {}
     }
 
     temp_dir = tempfile.mkdtemp()
@@ -193,7 +190,16 @@ def main(circuit, size, backend, shots, batch_size, providers, n_cores, _run, _l
     batch_index = 0
     while remaining > 0:
         batch = min(batch_size, remaining)
-        data, mirror = run_batch(qc, mirror_qc, batch, executor, backends)
+        try:
+            data, mirror = run_batch(qc, mirror_qc, batch, executor, backends)
+        except RuntimeError as e:
+            print(f"Run {circuit}_{size}_{backend} failed")
+            
+            error_path = "errors.txt"
+            with open(error_path, "a" if os.path.exists(error_path) else "w") as file:
+                file.write(f"{circuit}_{size}_{backend}: {e}\n\n")
+
+            raise RuntimeError(e)
         remaining -= batch
         timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
         batch_record = {"batch_index": batch_index, "shots": batch, "data": data[backend][0], "timestamp": timestamp}
@@ -220,3 +226,15 @@ def main(circuit, size, backend, shots, batch_size, providers, n_cores, _run, _l
     _log.info("Experiment completed successfully.")
 
     shutil.rmtree(temp_dir, ignore_errors=True)
+
+    print(f"Run {circuit}_{size}_{backend} completed")
+
+    end_time = datetime.now()
+    elapsed_time = end_time - start_time
+    time_path = "times.txt"
+    if not os.path.exists(time_path):
+        with open(time_path, "w") as file:
+            file.write(f"{circuit}_{size}_{backend}: {elapsed_time}\n")
+    else:
+        with open(time_path, "a") as file:
+            file.write(f"{circuit}_{size}_{backend}: {elapsed_time}\n")

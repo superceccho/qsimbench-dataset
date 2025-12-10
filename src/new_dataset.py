@@ -5,11 +5,10 @@ import os
 import subprocess
 import platform
 import psutil
-import atexit
 
-def close_compose():
-    subprocess.run("docker compose down", shell=True)
-    
+class QSimBenchError(Exception):
+    pass
+
 load_dotenv()
 
 OUTPUT_DIR=os.getenv("OUTPUT_DIR", "../dataset")
@@ -19,9 +18,9 @@ ALGORITHMS=json.loads(os.getenv("ALGORITHMS"))
 SIZES=json.loads(os.getenv("SIZES"))
 BACKENDS=json.loads(os.getenv("BACKENDS"))
 SHOTS=os.getenv("SHOTS", 20000)
-N_CORES=os.getenv("N_CORES")
+N_CORES= os.getenv("N_CORES") if os.getenv("N_CORES") != "all" else None
 if not ALGORITHMS or not SIZES or not BACKENDS:
-    raise RuntimeError("Empty run parameter(s)")
+    raise QSimBenchError("Empty run parameter(s)")
 
 JOBS=os.getenv("JOBS", os.cpu_count())
 LOAD=os.getenv("LOAD", os.cpu_count())
@@ -30,25 +29,20 @@ MEMSUSPEND=os.getenv("MEMSUSPEND")
 DELAY=os.getenv("DELAY", "0")
 
 if not MEMFREE or not MEMSUSPEND:
-    raise RuntimeError("Missing parallel parameter(s)")
+    raise QSimBenchError("Missing parallel parameter(s)")
 
 try:
     meta=open(f"{OUTPUT_DIR}/versions.json", "r")
     versions=json.load(meta)
     meta.close()
     if VERSION_NAME in versions:
-        raise RuntimeError("Version name already used")
+        raise QSimBenchError("Version name already used")
 except FileNotFoundError:
     versions=[]
 
-subprocess.run(["docker", "compose", "up", "-d"], check=True)
-print("Docker containers running")
-
-atexit.register(close_compose)
-
-command=["parallel", "--jobs", JOBS, "--load", LOAD, "--memfree", MEMFREE, "--memsuspend", MEMSUSPEND, "--delay", DELAY, "--progress", f"python experiment.py with circuit={{1}} size={{2}} backend={{3}} shots={SHOTS} n_cores={N_CORES}", ":::", *ALGORITHMS, ":::", *map(str, SIZES), ":::", *BACKENDS]
+command=["parallel", "--jobs", JOBS, "--load", LOAD, "--memfree", MEMFREE, "--memsuspend", MEMSUSPEND, "--delay", DELAY, f"python experiment.py with circuit={{1}} size={{2}} backend={{3}} shots={SHOTS} n_cores={N_CORES}", ":::", *ALGORITHMS, ":::", *map(str, SIZES), ":::", *BACKENDS]
 start_time=datetime.now().time().strftime("%H:%M:%S")
-subprocess.run(command, check=True)
+subprocess.run(command)
 end_time=datetime.now().time().strftime("%H:%M:%S")
 
 from create_dataset import process_all_completed
@@ -82,16 +76,35 @@ vm = psutil.virtual_memory()
 metadata["memory_total_GB"] = round(vm.total / (1024**3), 2)
 metadata["memory_available_GB"] = round(vm.available / (1024**3), 2)
 
-libraries=subprocess.getoutput("pip freeze").splitlines()
+libraries=subprocess.getoutput("uv pip freeze").splitlines()
+libraries.pop(0)
 metadata["libraries"]=libraries
+
+print("Metadata created")
 
 with open(f"{OUTPUT_DIR}/{VERSION_NAME}/metadata.json", "w") as meta:
     json.dump(metadata, meta, indent=2)
+print("Metadata saved")
 
 with open(f"{OUTPUT_DIR}/versions.json", "w") as vers:
     versions.append(VERSION_NAME)
     json.dump(versions, vers)
+print("Versions file updated")
 
-subprocess.run(["git", "add", OUTPUT_DIR], check=True)
-subprocess.run(["git", "commit", "-m", f"Added version {VERSION_NAME}"], check=True)
-subprocess.run(["git", "push", "--force"], check=True)
+try:
+    subprocess.run(["git", "add", OUTPUT_DIR], check=True, stdout=subprocess.PIPE)
+    print("git add done")
+except:
+    print("git add failed")
+
+try:
+    subprocess.run(["git", "commit", "-m", f"Added version {VERSION_NAME}"], check=True, stdout=subprocess.PIPE)
+    print("git commit done")
+except:
+    print("git commit failed")
+
+try:
+    subprocess.run(["git", "push", "--force"], check=True, stdout=subprocess.PIPE)
+    print("git push done")
+except:
+    print("git push failed")

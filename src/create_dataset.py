@@ -18,12 +18,9 @@ MONGO_DB = os.getenv("MONGO_DATABASE", "sacred")
 MONGO_URI = os.getenv("MONGO_URI") or \
              f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/?authSource=admin'
 
-print(f"Connecting to MongoDB at {MONGO_URI}")
-
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "output/dataset")
 VERSION_NAME=os.getenv("VERSION_NAME", date.today().strftime("%Y-%m"))
 OUTPUT_DIR = f"{OUTPUT_DIR}/{VERSION_NAME}"
-print(f"Output directory set to: {OUTPUT_DIR}")
 
 # ── Connect to MongoDB and GridFS ───────────────────────────────────
 client = MongoClient(MONGO_URI)
@@ -157,7 +154,6 @@ def generate_histories(summary_paths, output_dir):
             with open(out_file, "w") as of:
                 for r in rows_sorted:
                     of.write(json.dumps(r) + "\n")
-            print(f"[OK] History for {tuple_key} ({hist_type}) -> {out_file}")
 
 # ── Main processing ─────────────────────────────────────────────────
 def process_all_completed(output_dir=OUTPUT_DIR):
@@ -166,18 +162,18 @@ def process_all_completed(output_dir=OUTPUT_DIR):
     summary_paths = []
 
     for run_doc in completed:
-        print(f"Processing run {run_doc['_id']}...")
         try:
             path = create_summary_from_run(run_doc, output_dir)
-            print(f"[OK] Summary written to {path}")
             summary_paths.append(path)
         except Exception as e:
             print(f"[ERR] Run {run_doc['_id']}: {e}")
 
-    print(f"\nGenerated {len(summary_paths)} summaries in `{output_dir}/`")
+    print(f"Generated {len(summary_paths)} summaries in `{output_dir}/`")
 
     # Build and write histories
     generate_histories(summary_paths, output_dir)
+
+    print("Generated histories")
 
     metadata["version"]=VERSION_NAME
     algorithms.sort()

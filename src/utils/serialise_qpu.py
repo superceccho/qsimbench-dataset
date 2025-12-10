@@ -9,8 +9,10 @@ from pymongo import MongoClient
 
 from dotenv import load_dotenv
 from pathlib import Path
+
+from tqdm import tqdm
+
 dotenv_path = Path(__file__).parent.parent.parent / "src" / ".env"
-print("Loading environment variables from:", dotenv_path)
 load_dotenv(dotenv_path=dotenv_path)
 
 MONGO_HOST = 'localhost'
@@ -22,8 +24,6 @@ DB_NAME = 'quantum_backends'
 COLLECTION_NAME = 'qiskit_fake_backends'
 
 mongo_url = f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/'
-
-print(f"Connecting to MongoDB at {mongo_url}")
 
 client = MongoClient(mongo_url)
 db = client[DB_NAME]
@@ -56,11 +56,16 @@ def serialize_backends(backends):
     Args:
         backends (List[BackendV2]): List of FakeBackendV2 or similar backends.
     """
+    inserted = []
+
     for backend in backends:
         name = backend.name if hasattr(backend, 'name') else type(backend).__name__
         # Extract core components
         cfg = make_serializable(backend.configuration().to_dict())
         props = make_serializable(backend.properties().to_dict()) if hasattr(backend, 'properties') and backend.properties() else {}
+
+        if cfg["n_qubits"] < 10:
+            continue
 
         # Prepare document
         doc = {
@@ -72,7 +77,11 @@ def serialize_backends(backends):
 
         # Upsert into MongoDB
         collection.replace_one({'_id': name}, doc, upsert=True)
+        inserted.append(backend.name)
         print(f"Serialized backend '{name}' into MongoDB.")
+
+    return inserted
+
 
 
 def load_backend(name):
@@ -95,7 +104,6 @@ def load_backend(name):
     # Create an AER simulator from the backend
     sim = AerSimulator(configuration=cfg, 
                         properties=props)
-    print(f"Loaded backend '{name}' and created AerSimulator.")
     return sim
 
 
@@ -105,14 +113,8 @@ if __name__ == '__main__':
     qe = QuantumExecutor(providers=["local_aer"])
     backends = [b._backend for b in list(qe.virtual_provider.get_backends()["local_aer"].values())]
 
+    print(f"# of backends: {len(backends)}")
+    inserted = serialize_backends(backends)
 
-    print(f"Found {len(backends)} backends to serialize.")
-    print("Backends:", [b.name for b in backends])
-    serialize_backends(backends)
-    
-    fake_algiers = load_backend('fake_algiers')
-    print("Loaded Fake Algiers Backend:", fake_algiers)
-    
-    aer_sim = load_backend('aer_simulator')
-    print("Loaded AerSimulator:", aer_sim)
-
+    backends_doc = {"_id": "backends", "backends": inserted}
+    collection.insert_one(backends_doc)
