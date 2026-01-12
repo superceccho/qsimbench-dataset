@@ -40,7 +40,17 @@ try:
 except FileNotFoundError:
     versions=[]
 
-command=["parallel", "--jobs", JOBS, "--load", LOAD, "--memfree", MEMFREE, "--memsuspend", MEMSUSPEND, "--delay", DELAY, f"python experiment.py with circuit={{1}} size={{2}} backend={{3}} shots={SHOTS} n_cores={N_CORES}", ":::", *ALGORITHMS, ":::", *map(str, SIZES), ":::", *BACKENDS]
+try:
+    os.remove("times.csv")
+except:
+    pass
+
+try:
+    os.remove("errors.txt")
+except:
+    pass
+
+command=["parallel", "--progress", "--jobs", JOBS, "--load", LOAD, "--memfree", MEMFREE, "--memsuspend", MEMSUSPEND, "--delay", DELAY, f"python experiment.py with circuit={{1}} size={{2}} backend={{3}} shots={SHOTS} n_cores={N_CORES}", ":::", *ALGORITHMS, ":::", *map(str, SIZES), ":::", *BACKENDS]
 start_time=datetime.now().time().strftime("%H:%M:%S")
 subprocess.run(command)
 end_time=datetime.now().time().strftime("%H:%M:%S")
@@ -92,7 +102,7 @@ with open(f"{OUTPUT_DIR}/versions.json", "w") as vers:
 print("Versions file updated")
 
 try:
-    subprocess.run(["git", "add", OUTPUT_DIR], check=True, stdout=subprocess.PIPE)
+    subprocess.run(["git", "add", f"{OUTPUT_DIR}/{VERSION_NAME}", f"{OUTPUT_DIR}/versions.json"], check=True, stdout=subprocess.PIPE)
     print("git add done")
 except:
     print("git add failed")

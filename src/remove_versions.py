@@ -30,9 +30,14 @@ if os.path.exists(vers_path):
 else:
     raise QSimBenchError("No versions file")
 
+removed = []
 for version in versions:
-    shutil.rmtree(f"{OUTPUT_DIR}/{version}")
+    try:
+        shutil.rmtree(f"{OUTPUT_DIR}/{version}")
+    except:
+        pass
     all_versions.remove(version)
+    removed.append(f"{OUTPUT_DIR}/{version}")
     print(f"version {version} deleted")
 print("Versions deleted")
 
@@ -41,7 +46,7 @@ with open(f"{OUTPUT_DIR}/versions.json", "w") as file:
 print("Updated versions file")
 
 try:
-    subprocess.run(["git", "add", OUTPUT_DIR], check=True, stdout=subprocess.PIPE)
+    subprocess.run(["git", "add", *removed], check=True, stdout=subprocess.PIPE)
     print("git add done")
 except:
     print("git add failed")

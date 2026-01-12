@@ -231,10 +231,11 @@ def main(circuit, size, backend, shots, batch_size, providers, n_cores, _run, _l
 
     end_time = datetime.now()
     elapsed_time = end_time - start_time
-    time_path = "times.txt"
+    time_path = "times.csv"
     if not os.path.exists(time_path):
         with open(time_path, "w") as file:
-            file.write(f"{circuit}_{size}_{backend}: {elapsed_time}\n")
+            file.write("algorithm,size,backend,time\n")
+            file.write(f"{circuit},{size},{backend},{elapsed_time}\n")
     else:
         with open(time_path, "a") as file:
-            file.write(f"{circuit}_{size}_{backend}: {elapsed_time}\n")
+            file.write(f"{circuit},{size},{backend},{elapsed_time}\n")
