@@ -1,0 +1,155 @@
+{
+  "timestamp": "2026-01-13 21:20:19",
+  "cpu_global": {
+    "percent_total": 78.1,
+    "percent_per_core": [
+      100.0,
+      100.0,
+      0.0,
+      100.0
+    ],
+    "times": [
+      {
+        "user": 1342562.45,
+        "nice": 125.31,
+        "system": 31398.48,
+        "idle": 5125898.61,
+        "iowait": 5080.35,
+        "irq": 0.0,
+        "softirq": 417.44,
+        "steal": 0.0,
+        "guest": 0.0,
+        "guest_nice": 0.0
+      },
+      {
+        "user": 1321931.86,
+        "nice": 98.3,
+        "system": 30765.64,
+        "idle": 5115664.91,
+        "iowait": 5136.27,
+        "irq": 0.0,
+        "softirq": 35595.17,
+        "steal": 0.0,
+        "guest": 0.0,
+        "guest_nice": 0.0
+      },
+      {
+        "user": 1335536.88,
+        "nice": 101.49,
+        "system": 31589.91,
+        "idle": 5131503.09,
+        "iowait": 5609.17,
+        "irq": 0.0,
+        "softirq": 168.83,
+        "steal": 0.0,
+        "guest": 0.0,
+        "guest_nice": 0.0
+      },
+      {
+        "user": 1342800.48,
+        "nice": 107.13,
+        "system": 32342.94,
+        "idle": 5123007.58,
+        "iowait": 6380.54,
+        "irq": 0.0,
+        "softirq": 195.26,
+        "steal": 0.0,
+        "guest": 0.0,
+        "guest_nice": 0.0
+      }
+    ],
+    "count_logical": 4,
+    "count_physical": 4,
+    "frequency": {
+      "current": 2194.845,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "stats": {
+      "ctx_switches": 9369857726,
+      "interrupts": 10871169033,
+      "soft_interrupts": 3774731607,
+      "syscalls": 0
+    }
+  },
+  "ram_global": {
+    "virtual": {
+      "total": 8232030208,
+      "available": 4282957824,
+      "percent": 48.0,
+      "used": 3949072384,
+      "free": 2170130432,
+      "active": 2984714240,
+      "inactive": 2338283520,
+      "buffers": 133259264,
+      "cached": 2286174208,
+      "shared": 3555328,
+      "slab": 420642816
+    },
+    "swap": {
+      "total": 4294963200,
+      "used": 557408256,
+      "free": 3737554944,
+      "percent": 13.0,
+      "sin": 1682948096,
+      "sout": 3399626752
+    }
+  },
+  "disk_global": {
+    "usage_root": {
+      "total": 105089261568,
+      "used": 28601552896,
+      "free": 71102222336,
+      "percent": 28.7
+    },
+    "io": {
+      "read_count": 1905233,
+      "write_count": 32974261,
+      "read_bytes": 72661014016,
+      "write_bytes": 439896548352,
+      "read_time": 3201387,
+      "write_time": 373444364,
+      "read_merged_count": 386437,
+      "write_merged_count": 9753468,
+      "busy_time": 149495654
+    }
+  },
+  "process": {
+    "pid": 2482751,
+    "name": "python",
+    "status": "sleeping",
+    "cpu_percent": 101.5,
+    "cpu_times": {
+      "user": 6.65,
+      "system": 1.02,
+      "children_user": 0.12,
+      "children_system": 0.32,
+      "iowait": 0.0
+    },
+    "memory_info": {
+      "rss": 450240512,
+      "vms": 2102550528,
+      "shared": 129892352,
+      "text": 3026944,
+      "lib": 0,
+      "data": 623091712,
+      "dirty": 0
+    },
+    "memory_percent": 5.469373904416071,
+    "num_threads": 20,
+    "io_counters": {
+      "read_count": 12610,
+      "write_count": 41,
+      "read_bytes": 0,
+      "write_bytes": 4096,
+      "read_chars": 113174874,
+      "write_chars": 33222
+    },
+    "open_files": [
+      "/tmp/tmpy9w9jyxg",
+      "/tmp/tmpxjq1duu4/history_circuit.jsonl",
+      "/tmp/tmpxjq1duu4/history_mirror.jsonl",
+      "/tmp/tmpxjq1duu4/stats.jsonl"
+    ]
+  }
+}
