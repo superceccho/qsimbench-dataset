@@ -51,9 +51,9 @@ except:
     pass
 
 command=["parallel", "--progress", "--jobs", JOBS, "--load", LOAD, "--memfree", MEMFREE, "--memsuspend", MEMSUSPEND, "--delay", DELAY, f"python experiment.py with circuit={{1}} size={{2}} backend={{3}} shots={SHOTS} n_cores={N_CORES}", ":::", *ALGORITHMS, ":::", *map(str, SIZES), ":::", *BACKENDS]
-start_time=datetime.now().time().strftime("%H:%M:%S")
+start_time=datetime.now().strftime("%H:%M:%S, %Y-%m-%d")
 subprocess.run(command)
-end_time=datetime.now().time().strftime("%H:%M:%S")
+end_time=datetime.now().strftime("%H:%M:%S, %Y-%m-%d")
 
 from create_dataset import process_all_completed
 process_all_completed()
@@ -69,7 +69,6 @@ metadata["backends"]=BACKENDS
 metadata["shots"]=SHOTS
 metadata["start_time"]=start_time
 metadata["end_time"]=end_time
-metadata["date"]=datetime.today().strftime("%Y-%m-%d")
 
 metadata["os"]=platform.system()
 metadata["os_version"]=platform.version()
